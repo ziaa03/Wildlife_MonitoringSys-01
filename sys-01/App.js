@@ -25,6 +25,8 @@ const App = () => {
         'Poppins-Bold': require('./assets/fonts/Poppins-Bold.ttf'),
         'NexaTextDemo-Bold': require('./assets/fonts/NexaTextDemo-Bold.ttf'),
         'NexaTextDemo-Light': require('./assets/fonts/NexaTextDemo-Light.ttf'),
+        'Poppins-Medium': require('./assets/fonts/Poppins-Medium.ttf'),
+        'Poppins-SemiBold': require('./assets/fonts/Poppins-SemiBold.ttf'),
       });
       setFontsLoaded(true);
     }

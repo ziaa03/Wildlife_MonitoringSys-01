@@ -1,218 +1,237 @@
 import React from 'react';
-import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, ScrollView, Linking } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Linking, ImageBackground } from 'react-native';
+import { FontAwesome5 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
 const LandingPage = () => {
   const navigation = useNavigation();
 
+  const landingPageImage = require('./assets/latest.jpg');
+
   return (
-    <ScrollView style={styles.container}>
-      {/* Hero Section */}
-      <ImageBackground
-        source={{ uri: "https://images4.alphacoders.com/987/987880.jpg" }}
-        style={styles.backgroundImage}
-        imageStyle={styles.backgroundImageStyle}
-      >
-        <View style={styles.overlay}>
-          <Text style={styles.title}>Semenggoh Wildlife Centre</Text>
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('MainNavigator')}>
-            <Text style={styles.buttonText}>Explore <FontAwesome name="arrow-right" size={16} color="#fff" /></Text>
+    <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        {/* Hero Section with Image Background */}
+        <View style={styles.heroSectionWrapper}>
+          <ImageBackground
+            source={landingPageImage}
+            style={styles.heroSection}
+          >
+            <View style={styles.heroOverlay}>
+              <Text style={styles.title}>Semenggoh Wildlife Centre</Text>
+              <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('MainNavigator')}>
+                <Text style={styles.buttonText}>
+                  Explore <FontAwesome5 name="arrow-right" size={16} color="#fff" />
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </ImageBackground>
+        </View>
+
+        {/*Welcome Message*/}
+        <View style={styles.textSection}>
+          <Text style={styles.sectionTitle}>Welcome to Semenggoh Wildlife Centre</Text>
+          <Text style={styles.sectionText}>
+            The Semenggoh Wildlife Centre is a sanctuary for orangutans in Borneo. Established in 1975, the centre is dedicated to the rehabilitation of orangutans that have been injured, orphaned, or rescued from captivity. The centre is located within the Semenggoh Nature Reserve, a protected rainforest area.
+          </Text>
+        </View>
+
+        {/* Line Separator */}
+        <View style={styles.lineSeparator} />
+
+        {/* Feature Highlights */}
+        <View style={styles.featuresContainer}>
+          <FeatureCard icon="map-marked-alt" title="Interactive Map" />
+          <FeatureCard icon="info-circle" title="Your Bookings" />
+        </View>
+
+        {/* Line Separator */}
+        <View style={styles.lineSeparator} />
+
+        {/* Plan Your Visit */}
+        <View style={styles.textSection}>
+          <Text style={styles.sectionTitle}>Plan Your Visit</Text>
+          <Text style={styles.sectionText}>
+            Discover the Semenggoh Wildlife Centre, located in Borneo's stunning Semenggoh Nature Reserve. Learn about the best times to visit and what to expect.
+          </Text>
+          <TouchableOpacity style={styles.ctaButton} onPress={() => navigation.navigate('VisitDetails')}>
+            <Text style={styles.ctaButtonText}>Learn More</Text>
           </TouchableOpacity>
         </View>
-      </ImageBackground>
 
-      {/* Feature Highlights */}
-      <View style={styles.featuresContainer}>
-        <FeatureCard icon="paw" title="Wildlife Monitoring" description="Track and view real-time wildlife data." />
-        <FeatureCard icon="map" title="Interactive Map" description="Navigate the reserve with ease." />
-        <FeatureCard icon="info-circle" title="Visitor Info" description="Get all the details you need to plan your visit." />
-      </View>
+        {/* Line Separator */}
+        <View style={styles.lineSeparator} />
 
-      {/* Plan Your Visit */}
-      <View style={styles.visitSection}>
-        <Text style={styles.sectionTitle}>Plan Your Visit</Text>
-        <Text style={styles.sectionText}>
-          Located in the Semenggoh Nature Reserve, the Semenggoh Wildlife Centre is the premier destination to see orangutans in Malaysia. 
-          A trip to Borneo isn't complete without viewing these majestic creatures up close. Discover the best times to visit and what to expect.
-        </Text>
-        <TouchableOpacity style={styles.ctaButton} onPress={() => navigation.navigate('VisitDetails')}>
-          <Text style={styles.ctaButtonText}>Learn More</Text>
-        </TouchableOpacity>
-      </View>
+        {/* Visitation Information */}
+        <View style={styles.textSection}>
+          <Text style={styles.sectionTitle}>Visitation Information</Text>
+          <Text style={styles.sectionText}>Off Jalan Puncak Borneo, 93250 Siburan</Text>
+          <Text style={styles.sectionText}>Phone: 082-618 325</Text>
+          <Text style={styles.sectionText}>Open Daily: 8am - 4:30pm</Text>
+          <TouchableOpacity style={styles.mapButton} onPress={() => Linking.openURL('https://www.google.com/maps/place/Semenggoh+Wildlife+Centre')}>
+            <Text style={styles.mapButtonText}>View on Map</Text>
+          </TouchableOpacity>
+        </View>
 
-      {/* Visitation Information */}
-      <View style={styles.visitationSection}>
-        <Text style={styles.sectionTitle}>Visitation Information</Text>
-        <Text style={styles.sectionText}>Off To Jalan Puncak Borneo 93250 Siburan · 13 km</Text>
-        <Text style={styles.sectionText}>Phone: 082-618 325</Text>
-        <Text style={styles.sectionText}>Open: Everyday 8am - 4:30pm</Text>
-        <TouchableOpacity style={styles.mapButton} onPress={() => Linking.openURL('https://www.google.com/maps/place/Semenggoh+Wildlife+Centre')}>
-          <Text style={styles.mapButtonText}>View on Map</Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* Footer */}
-      <View style={styles.footer}>
-        <Text style={styles.footerText}>© 2024 Semenggoh Wildlife Centre</Text>
-        <TouchableOpacity onPress={() => Linking.openURL('mailto:info@semenggohwildlife.org')}>
-          <Text style={styles.footerLink}>Contact Us</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => Linking.openURL('https://www.semenggohwildlife.org')}>
-          <Text style={styles.footerLink}>Visit Our Website</Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+        {/* Footer */}
+        <View style={styles.footer}>
+          <Text style={styles.footerText}>© 2024 Semenggoh Wildlife Centre</Text>
+          <TouchableOpacity onPress={() => Linking.openURL('mailto:info@semenggohwildlife.org')}>
+            <Text style={styles.footerLink}>Contact Us</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => Linking.openURL('https://www.semenggohwildlife.org')}>
+            <Text style={styles.footerLink}>Visit Our Website</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </View>
   );
 };
 
-const FeatureCard = ({ icon, title, description }) => (
+const FeatureCard = ({ icon, title }) => (
   <View style={styles.featureCard}>
-    <FontAwesome name={icon} size={40} color="#007f66" />
+    <FontAwesome5 name={icon} size={24} color="#00695C" />
     <Text style={styles.featureTitle}>{title}</Text>
-    <Text style={styles.featureDescription}>{description}</Text>
   </View>
 );
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#f4f4f4',
   },
-  backgroundImage: {
-    height: 300,
+  scrollContent: {
+    paddingBottom: 50,
+  },
+  heroSectionWrapper: {
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
+    overflow: 'hidden',
+  },
+  heroSection: {
+    height: 350, // Increased height for better impact
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 25,
+  },
+  heroOverlay: {
+    backgroundColor: 'rgba(0, 0, 0, 0.4)', // Semi-transparent overlay
+    width: '100%',
+    height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  backgroundImageStyle: {
-    opacity: 0.8,
-  },
-  overlay: {
-    backgroundColor: 'rgba(0,0,0,0.6)',
-    padding: 20,
-    borderRadius: 10,
-    alignItems: 'center',
-  },
   title: {
-    fontSize: 28,
-    color: '#fff',
-    marginBottom: 10,
-    fontFamily: 'Poppins-Bold',
+    fontSize: 36,
+    color: '#FFF',
+    marginBottom: 20,
+    fontFamily: 'Poppins-SemiBold',
     textAlign: 'center',
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 10,
   },
   button: {
-    backgroundColor: 'transparent',
-    paddingHorizontal: 20,
-    paddingVertical: 5,
+    backgroundColor: 'rgba(0, 77, 64, 0.8)', // Semi-transparent button
+    paddingHorizontal: 25,
+    paddingVertical: 12,
     borderRadius: 25,
-    borderWidth: 2,
-    borderColor: '#007f66',
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontFamily: 'Poppins-Regular',
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  buttonText: {
+    color: '#FFF',
+    fontSize: 18,
+    fontFamily: 'Poppins-Medium',
   },
   featuresContainer: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     padding: 20,
+    marginVertical: 20,
   },
   featureCard: {
-    backgroundColor: '#fff',
-    borderRadius: 8,
-    padding: 20,
     alignItems: 'center',
-    width: '30%',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 6,
-    elevation: 3,
-    marginBottom: 20,
+    width: '45%',
   },
   featureTitle: {
     fontSize: 16,
     marginTop: 10,
-    color: '#007f66',
-    fontFamily: 'Poppins-Bold',
+    color: '#00695C',
+    fontFamily: 'Poppins-SemiBold',
+    textAlign: 'center',
   },
   featureDescription: {
     fontSize: 14,
     textAlign: 'center',
-    color: '#333',
+    color: '#555',
     fontFamily: 'Poppins-Regular',
   },
-  visitSection: {
-    padding: 20,
-    backgroundColor: '#e6f7f1',
-    borderRadius: 10,
-    margin: 20,
+  textSection: {
+    padding: 25,
+    marginHorizontal: 20,
     alignItems: 'center',
+    marginBottom: 20,
   },
   sectionTitle: {
-    fontSize: 22,
-    fontFamily: 'Poppins-Bold',
-    color: '#007f66',
-    marginBottom: 10,
+    fontSize: 20,
+    fontFamily: 'Poppins-SemiBold',
+    color: '#00695C',
+    marginBottom: 14,
     textAlign: 'center',
   },
   sectionText: {
     fontSize: 16,
     fontFamily: 'Poppins-Regular',
-    color: '#333',
+    color: '#444',
     textAlign: 'center',
-    marginBottom: 10,
+    marginBottom: 15,
+  },
+  lineSeparator: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#CCC',
+    marginHorizontal: 20,
+    marginVertical: 10,
   },
   ctaButton: {
-    backgroundColor: '#007f66',
+    backgroundColor: '#00695C',
     paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 25,
+    paddingVertical: 12,
+    borderRadius: 15,
   },
   ctaButtonText: {
-    color: '#fff',
+    color: '#FFF',
     fontSize: 16,
-    fontFamily: 'Poppins-Regular',
-  },
-  visitationSection: {
-    padding: 20,
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    margin: 20,
-    alignItems: 'center',
+    fontFamily: 'Poppins-SemiBold',
   },
   mapButton: {
-    marginTop: 10,
-    backgroundColor: '#007f66',
+    marginTop: 15,
+    backgroundColor: '#00695C',
     paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 25,
+    paddingVertical: 12,
+    borderRadius: 15,
   },
   mapButtonText: {
-    color: '#fff',
+    color: '#FFF',
     fontSize: 16,
-    fontFamily: 'Poppins-Regular',
+    fontFamily: 'Poppins-SemiBold',
   },
   footer: {
-    backgroundColor: '#007f66',
-    padding: 20,
+    backgroundColor: '#00695C',
+    padding: 30,
     alignItems: 'center',
   },
   footerText: {
-    color: '#fff',
-    fontSize: 14,
+    color: '#FFF',
+    fontSize: 15,
     fontFamily: 'Poppins-Regular',
     marginBottom: 10,
   },
   footerLink: {
-    color: '#fff',
+    color: '#FFF',
     fontSize: 16,
-    fontFamily: 'Poppins-Regular',
-    marginVertical: 5,
+    fontFamily: 'Poppins-Medium',
+    marginVertical: 6,
   },
 });
 
