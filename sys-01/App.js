@@ -1,37 +1,48 @@
-import React from 'react';
-import { View, Text, ScrollView, StyleSheet, Platform } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';  // Import vector icons
+import React, { useState, useEffect } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import * as Font from 'expo-font';
+import HomeScreen from './home-screen';
+import ProfilePage from './profile-page';
+import LandingPage from './landing-page';
 
-/**
- * @param {IconTextProps} props
- */
-const IconText = ({ name, label }) => (
-  <View style={{ alignItems: 'center' }}>
-    <FontAwesome name={name} size={24} color="black" />  {/* Use icons instead of emojis */}
-    <Text style={styles.notoSansText}>{label}</Text>  {/* Optionally add a label under the icon */}
-  </View>
+const Stack = createStackNavigator();
+
+const MainNavigator = () => (
+  <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Screen name="Home" component={HomeScreen} />
+    <Stack.Screen name="Profile" component={ProfilePage} />
+  </Stack.Navigator>
 );
 
-const AppMockup = () => (
-  <View style={{ flex: 1, backgroundColor: '#f0f0f0' }}>
-    <View style={{ backgroundColor: '#ADD8E6', padding: 23, paddingTop: 30 }}>
-      <Text style={[styles.notoSansText, { color: 'white', fontSize: 20, fontWeight: 'bold' }]}>Semenggoh Wildlife Centre</Text>
-    </View>
-    <ScrollView style={{ flex: 1, padding: 16 }}>
-      <View style={{ backgroundColor: 'white', borderRadius: 8, padding: 16, marginBottom: 16 }}>
-        <Text style={[styles.notoSansText, { fontSize: 18, fontWeight: '600', marginBottom: 8 }]}>Reserve Map</Text>
-      </View> 
-    </ScrollView>
-  </View>
-);
+const App = () => {
+  const [fontsLoaded, setFontsLoaded] = useState(false);
 
-const styles = StyleSheet.create({
-  notoSansText: {
-    fontFamily: Platform.select({
-      ios: 'Noto Sans',
-      android: 'Noto Sans',
-    }),
-  },
-});
+  useEffect(() => {
+    async function loadFonts() {
+      await Font.loadAsync({
+        'Poppins-Regular': require('./assets/fonts/Poppins-Regular.ttf'),
+        'Poppins-Bold': require('./assets/fonts/Poppins-Bold.ttf'),
+        'NexaTextDemo-Bold': require('./assets/fonts/NexaTextDemo-Bold.ttf'),
+        'NexaTextDemo-Light': require('./assets/fonts/NexaTextDemo-Light.ttf'),
+      });
+      setFontsLoaded(true);
+    }
+    loadFonts();
+  }, []);
 
-export default AppMockup;
+  if (!fontsLoaded) {
+    return null;
+  }
+
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Landing" screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Landing" component={LandingPage} />
+        <Stack.Screen name="MainNavigator" component={MainNavigator} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
+
+export default App;
