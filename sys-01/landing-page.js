@@ -1,15 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Linking, ImageBackground } from 'react-native';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome5, FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import Sidebar from './sidebar-nav';
 
 const LandingPage = () => {
   const navigation = useNavigation();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
 
   const landingPageImage = require('./assets/latest.jpg');
 
+  const handleProfilePress = () => {
+    navigation.navigate('Profile');
+    console.log('Navigating to Profile');
+  }
+  
+
   return (
     <View style={styles.container}>
+      <View style={styles.header}>
+        <TouchableOpacity onPress={toggleSidebar} style={styles.menuButton}>
+          <FontAwesome name="bars" size={24} color="black" />
+        </TouchableOpacity>
+        <View style={styles.headerSpacer} />
+        <TouchableOpacity onPress={handleProfilePress} style={styles.profileButton}>
+          <FontAwesome name="user-circle" size={24} color="black" />
+        </TouchableOpacity>
+      </View>
+      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {/* Hero Section with Image Background */}
         <View style={styles.heroSectionWrapper}>
@@ -21,7 +43,7 @@ const LandingPage = () => {
               <Text style={styles.title}>Semenggoh Wildlife Centre</Text>
               <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('MainNavigator')}>
                 <Text style={styles.buttonText}>
-                  Explore <FontAwesome5 name="arrow-right" size={16} color="#fff" />
+                  Discover <FontAwesome5 name="arrow-right" size={16} color="#fff" />
                 </Text>
               </TouchableOpacity>
             </View>
@@ -36,17 +58,11 @@ const LandingPage = () => {
           </Text>
         </View>
 
-        {/* Line Separator */}
-        <View style={styles.lineSeparator} />
-
         {/* Feature Highlights */}
         <View style={styles.featuresContainer}>
           <FeatureCard icon="map-marked-alt" title="Interactive Map" />
           <FeatureCard icon="info-circle" title="Your Bookings" />
         </View>
-
-        {/* Line Separator */}
-        <View style={styles.lineSeparator} />
 
         {/* Plan Your Visit */}
         <View style={styles.textSection}>
@@ -58,9 +74,6 @@ const LandingPage = () => {
             <Text style={styles.ctaButtonText}>Learn More</Text>
           </TouchableOpacity>
         </View>
-
-        {/* Line Separator */}
-        <View style={styles.lineSeparator} />
 
         {/* Visitation Information */}
         <View style={styles.textSection}>
@@ -99,6 +112,21 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f4f4f4',
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    paddingTop: 30,
+    paddingBottom: 15,
+    marginTop: 20,
+  },
+  menuButton: {
+    marginRight: 16,
+  },
+  headerSpacer: {
+    flex: 1,
   },
   scrollContent: {
     paddingBottom: 50,
