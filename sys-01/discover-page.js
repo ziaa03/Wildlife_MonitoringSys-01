@@ -1,4 +1,5 @@
-// HomeScreen.js
+// discover page is the home screen 
+
 import React, { useState } from 'react';
 import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity, Animated, TouchableWithoutFeedback } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -21,7 +22,7 @@ const FeatureCard = ({ icon, title, description, imageUrl }) => (
   </TouchableOpacity>
 );
 
-const HomeScreen = () => {
+const DiscoverPage = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -138,4 +139,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default DiscoverPage;

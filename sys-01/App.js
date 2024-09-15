@@ -2,18 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as Font from 'expo-font';
-import HomeScreen from './home-screen';
 import ProfilePage from './profile-page';
 import LandingPage from './landing-page';
+import DiscoverPage from './discover-page';
+import MapScreen from './map-screen';
 
 const Stack = createStackNavigator();
-
-const MainNavigator = () => (
-  <Stack.Navigator screenOptions={{ headerShown: false }}>
-    <Stack.Screen name="Home" component={HomeScreen} />
-    <Stack.Screen name="Profile" component={ProfilePage} />
-  </Stack.Navigator>
-);
 
 const App = () => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -34,14 +28,16 @@ const App = () => {
   }, []);
 
   if (!fontsLoaded) {
-    return null;
+    return null; // Or return a loading spinner here
   }
 
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Landing" screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Landing" component={LandingPage} />
-        <Stack.Screen name="MainNavigator" component={MainNavigator} />
+        <Stack.Screen name="Discover" component={DiscoverPage} />
+        <Stack.Screen name="Profile" component={ProfilePage} />
+        <Stack.Screen name="MapScreen" component={MapScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

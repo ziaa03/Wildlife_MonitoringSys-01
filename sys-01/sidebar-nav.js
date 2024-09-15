@@ -31,7 +31,8 @@ const Sidebar = ({ isOpen, onClose }) => {
         </TouchableWithoutFeedback>
       )}
       <Animated.View style={[styles.sidebar, { left: sidebarAnimation }]}>
-        <IconText name="home" label="Home" onPress={() => { onClose(); navigation.navigate('Home'); }} />
+        <IconText name="home" label="Home" onPress={() => { onClose(); navigation.navigate('Landing'); }} />
+        <IconText name="compass" label="Discover" onPress={() => { onClose(); navigation.navigate('Discover'); }} />
         <IconText name="user" label="Profile" onPress={() => { onClose(); navigation.navigate('Profile'); }} />
       </Animated.View>
     </>

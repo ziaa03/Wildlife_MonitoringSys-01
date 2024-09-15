@@ -1,24 +1,53 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Linking, ImageBackground } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ImageBackground, Image, FlatList, Dimensions } from 'react-native';
 import { FontAwesome5, FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import Sidebar from './sidebar-nav';
+import MapView, { Marker } from 'react-native-maps';  // Import MapView
 
 const LandingPage = () => {
   const navigation = useNavigation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const flatListRef = useRef(null);
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
 
-  const landingPageImage = require('./assets/latest.jpg');
-
   const handleProfilePress = () => {
     navigation.navigate('Profile');
     console.log('Navigating to Profile');
-  }
-  
+  };
+
+  const landingPageImage = require('./assets/latest.jpg');
+  const visitImages = [
+    require('./assets/visit1.jpg'),
+    require('./assets/visit2.jpg'),
+    require('./assets/visit3.jpeg')
+  ];
+
+  const viewabilityConfig = {
+    itemVisiblePercentThreshold: 50,
+  };
+
+  const onViewableItemsChanged = ({ viewableItems }) => {
+    if (viewableItems.length > 0) {
+      setCurrentIndex(viewableItems[0].index);
+    }
+  };
+
+  const renderDot = (index) => (
+    <View
+      key={index}
+      style={[
+        styles.dot,
+        {
+          backgroundColor: currentIndex === index ? '#00695C' : '#CCC',
+        },
+      ]}
+    />
+  );
 
   return (
     <View style={styles.container}>
@@ -41,7 +70,7 @@ const LandingPage = () => {
           >
             <View style={styles.heroOverlay}>
               <Text style={styles.title}>Semenggoh Wildlife Centre</Text>
-              <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('MainNavigator')}>
+              <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Discover')}>
                 <Text style={styles.buttonText}>
                   Discover <FontAwesome5 name="arrow-right" size={16} color="#fff" />
                 </Text>
@@ -50,7 +79,7 @@ const LandingPage = () => {
           </ImageBackground>
         </View>
 
-        {/*Welcome Message*/}
+        {/* Welcome Message */}
         <View style={styles.textSection}>
           <Text style={styles.sectionTitle}>Welcome to Semenggoh Wildlife Centre</Text>
           <Text style={styles.sectionText}>
@@ -58,55 +87,81 @@ const LandingPage = () => {
           </Text>
         </View>
 
-        {/* Feature Highlights */}
-        <View style={styles.featuresContainer}>
-          <FeatureCard icon="map-marked-alt" title="Interactive Map" />
-          <FeatureCard icon="info-circle" title="Your Bookings" />
+        {/* Interactive Map and Bookings Section */}
+        <View style={styles.iconSection}>
+          <TouchableOpacity onPress={() => navigation.navigate('MapScreen')} style={styles.iconButton}>
+            <FontAwesome5 name="map-marker-alt" size={28} color="#00695C" />
+            <Text style={styles.iconText}>Interactive Map</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Bookings')} style={styles.iconButton}>
+            <FontAwesome5 name="calendar-check" size={28} color="#00695C" />
+            <Text style={styles.iconText}>Your Bookings</Text>
+          </TouchableOpacity>
         </View>
 
-        {/* Plan Your Visit */}
-        <View style={styles.textSection}>
+        {/* Separator Line */}
+        <View style={[styles.lineSeparator, { marginBottom: 25 }]} />
+
+        {/* Plan Your Visit Section (Horizontal Scroll with Images) */}
+        <View style={styles.horizontalSection}>
           <Text style={styles.sectionTitle}>Plan Your Visit</Text>
           <Text style={styles.sectionText}>
-            Discover the Semenggoh Wildlife Centre, located in Borneo's stunning Semenggoh Nature Reserve. Learn about the best times to visit and what to expect.
+            Located in Borneo's stunning Semenggoh Nature Reserve. Learn about the best times to visit and what to expect.
           </Text>
+          <FlatList
+            ref={flatListRef}
+            horizontal
+            data={visitImages}
+            renderItem={({ item, index }) => (
+              <View style={styles.imageCard}>
+                <Image source={item} style={styles.image} />
+              </View>
+            )}
+            keyExtractor={(item, index) => index.toString()}
+            onViewableItemsChanged={onViewableItemsChanged}
+            viewabilityConfig={viewabilityConfig}
+            snapToInterval={Dimensions.get('window').width}
+            showsHorizontalScrollIndicator={false}
+          />
+          <View style={styles.dotsContainer}>
+            {visitImages.map((_, index) => renderDot(index))}
+          </View>
           <TouchableOpacity style={styles.ctaButton} onPress={() => navigation.navigate('VisitDetails')}>
             <Text style={styles.ctaButtonText}>Learn More</Text>
           </TouchableOpacity>
         </View>
 
-        {/* Visitation Information */}
+        {/* Separator Line */}
+        <View style={styles.lineSeparator} />
+
+        {/* Visitation Information (Text Only) */}
         <View style={styles.textSection}>
           <Text style={styles.sectionTitle}>Visitation Information</Text>
           <Text style={styles.sectionText}>Off Jalan Puncak Borneo, 93250 Siburan</Text>
           <Text style={styles.sectionText}>Phone: 082-618 325</Text>
           <Text style={styles.sectionText}>Open Daily: 8am - 4:30pm</Text>
-          <TouchableOpacity style={styles.mapButton} onPress={() => Linking.openURL('https://www.google.com/maps/place/Semenggoh+Wildlife+Centre')}>
+          <TouchableOpacity style={styles.mapButton} onPress={() => navigation.navigate('Discover')}>
             <Text style={styles.mapButtonText}>View on Map</Text>
           </TouchableOpacity>
         </View>
 
-        {/* Footer */}
+        {/* Footer inside ScrollView */}
         <View style={styles.footer}>
           <Text style={styles.footerText}>© 2024 Semenggoh Wildlife Centre</Text>
-          <TouchableOpacity onPress={() => Linking.openURL('mailto:info@semenggohwildlife.org')}>
-            <Text style={styles.footerLink}>Contact Us</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => Linking.openURL('https://www.semenggohwildlife.org')}>
-            <Text style={styles.footerLink}>Visit Our Website</Text>
-          </TouchableOpacity>
+          <View style={styles.footerLinks}>
+            <TouchableOpacity onPress={() => Linking.openURL('mailto:info@semenggohwildlife.org')}>
+              <Text style={styles.footerLink}>Contact</Text>
+            </TouchableOpacity>
+            <Text style={styles.footerDivider}>|</Text>
+            <TouchableOpacity onPress={() => Linking.openURL('https://www.semenggohwildlife.org')}>
+              <Text style={styles.footerLink}>Website</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
     </View>
   );
 };
-
-const FeatureCard = ({ icon, title }) => (
-  <View style={styles.featureCard}>
-    <FontAwesome5 name={icon} size={24} color="#00695C" />
-    <Text style={styles.featureTitle}>{title}</Text>
-  </View>
-);
 
 const styles = StyleSheet.create({
   container: {
@@ -128,8 +183,12 @@ const styles = StyleSheet.create({
   headerSpacer: {
     flex: 1,
   },
+  profileButton: {
+    // You can adjust padding if needed
+  },
   scrollContent: {
-    paddingBottom: 50,
+    flexGrow: 1,
+    paddingBottom: 20, // Added to avoid footer being cut off
   },
   heroSectionWrapper: {
     borderBottomLeftRadius: 30,
@@ -137,13 +196,13 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   heroSection: {
-    height: 350, // Increased height for better impact
+    height: 350,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 25,
   },
   heroOverlay: {
-    backgroundColor: 'rgba(0, 0, 0, 0.4)', // Semi-transparent overlay
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
     width: '100%',
     height: '100%',
     justifyContent: 'center',
@@ -160,7 +219,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 10,
   },
   button: {
-    backgroundColor: 'rgba(0, 77, 64, 0.8)', // Semi-transparent button
+    backgroundColor: 'rgba(0, 77, 64, 0.8)',
     paddingHorizontal: 25,
     paddingVertical: 12,
     borderRadius: 25,
@@ -172,28 +231,58 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: 'Poppins-Medium',
   },
-  featuresContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 20,
+  mapSection: {
     marginVertical: 20,
+    height: 250,
   },
-  featureCard: {
-    alignItems: 'center',
-    width: '45%',
+  map: {
+    width: '100%',
+    height: '100%',
   },
-  featureTitle: {
-    fontSize: 16,
+  mapButton: {
+    backgroundColor: '#00695C',
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    borderRadius: 15,
+    alignSelf: 'center',
     marginTop: 10,
-    color: '#00695C',
-    fontFamily: 'Poppins-SemiBold',
-    textAlign: 'center',
   },
-  featureDescription: {
-    fontSize: 14,
-    textAlign: 'center',
-    color: '#555',
-    fontFamily: 'Poppins-Regular',
+  mapButtonText: {
+    color: '#FFF',
+    fontSize: 16,
+    fontFamily: 'Poppins-SemiBold',
+  },
+  horizontalSection: {
+    marginBottom: 20,
+  },
+  horizontalScrollView: {
+    paddingHorizontal: 20,
+  },
+  imageCard: {
+    width: Dimensions.get('window').width,
+    padding: 10,
+  },
+  image: {
+    width: '100%',
+    height: 150,
+    borderRadius: 10,
+  },
+  dotsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginVertical: 10,
+  },
+  dot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    marginHorizontal: 4,
+  },
+  lineSeparator: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#CCC',
+    marginHorizontal: 20,
+    marginVertical: 10,
   },
   textSection: {
     padding: 25,
@@ -215,17 +304,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 15,
   },
-  lineSeparator: {
-    borderBottomWidth: 1,
-    borderBottomColor: '#CCC',
-    marginHorizontal: 20,
-    marginVertical: 10,
-  },
   ctaButton: {
     backgroundColor: '#00695C',
     paddingHorizontal: 20,
     paddingVertical: 12,
     borderRadius: 15,
+    alignSelf: 'center',
+    marginTop: 15,
   },
   ctaButtonText: {
     color: '#FFF',
@@ -244,22 +329,47 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'Poppins-SemiBold',
   },
+  iconSection: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginVertical: 20,
+  },
+  iconButton: {
+    alignItems: 'center',
+  },
+  iconText: {
+    marginTop: 8,
+    fontSize: 14,
+    fontFamily: 'Poppins-Regular',
+    color: '#444',
+    textAlign: 'center',
+  },
   footer: {
     backgroundColor: '#00695C',
-    padding: 30,
+    padding: 20,
     alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
   },
   footerText: {
     color: '#FFF',
-    fontSize: 15,
+    fontSize: 14,
     fontFamily: 'Poppins-Regular',
     marginBottom: 10,
   },
+  footerLinks: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   footerLink: {
     color: '#FFF',
-    fontSize: 16,
+    fontSize: 14,
     fontFamily: 'Poppins-Medium',
-    marginVertical: 6,
+    padding: 5,
+  },
+  footerDivider: {
+    color: '#FFF',
+    paddingHorizontal: 10,
   },
 });
 
