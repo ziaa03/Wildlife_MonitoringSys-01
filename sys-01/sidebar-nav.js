@@ -34,6 +34,8 @@ const Sidebar = ({ isOpen, onClose }) => {
         <IconText name="home" label="Home" onPress={() => { onClose(); navigation.navigate('Landing'); }} />
         <IconText name="compass" label="Discover" onPress={() => { onClose(); navigation.navigate('Discover'); }} />
         <IconText name="user" label="Profile" onPress={() => { onClose(); navigation.navigate('Profile'); }} />
+        <IconText name="cog" label="Settings" onPress={() => { onClose(); navigation.navigate('SettingsPage'); }} />
+
       </Animated.View>
     </>
   );

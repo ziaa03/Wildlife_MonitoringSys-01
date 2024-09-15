@@ -1,52 +1,88 @@
-// ProfilePage.js
 import React, { useState } from 'react';
-import { View, Text, ScrollView, StyleSheet, TextInput, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, TextInput, TouchableOpacity, Image, Alert } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
-import Sidebar from './sidebar-nav'; // Import your Sidebar component
+import Sidebar from './sidebar-nav';
+import { useNavigation } from '@react-navigation/native';
+import Header from './header-nav';
+import * as ImagePicker from 'expo-image-picker'; // Image picker library
 
 const ProfilePage = () => {
+  const navigation = useNavigation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [name, setName] = useState('Zia');
+  const [profileImage, setProfileImage] = useState(require('./assets/profile-placeholder.jpg'));
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
 
+  const handleImagePick = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== 'granted') {
+      Alert.alert('Permission needed', 'You need to grant permission to access the camera roll.');
+      return;
+    }
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.cancelled) {
+      setProfileImage({ uri: result.uri });
+    }
+  };
+
+  const handleNameEdit = () => {
+    // Logic for editing the name, e.g., opening a prompt
+    Alert.prompt('Edit Name', 'Enter your new name:', [
+      { text: 'Cancel' },
+      {
+        text: 'OK',
+        onPress: (newName) => {
+          if (newName) {
+            setName(newName);
+          }
+        },
+      },
+    ]);
+  };
+
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={toggleSidebar} style={styles.menuButton}>
-          <FontAwesome name="bars" size={24} color="#fff" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Profile</Text>
-      </View>
-      {sidebarOpen && (
-        <TouchableWithoutFeedback onPress={() => setSidebarOpen(false)}>
-          <View style={styles.overlay} />
-        </TouchableWithoutFeedback>
-      )}
+      <Header 
+        onMenuPress={toggleSidebar} 
+        onProfilePress={() => {}}
+        profileImageSource={profileImage} 
+      />
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       <ScrollView style={styles.content}>
         <View style={styles.profileContainer}>
-          <FontAwesome name="user-circle" size={100} color="#007f66" />
-          <Text style={styles.profileName}>Zia</Text>
+          <TouchableOpacity onPress={handleImagePick}>
+            <Image
+              source={profileImage}
+              style={styles.profileImage}
+            />
+            <View style={styles.editIconContainer}>
+              <FontAwesome name="edit" size={20} color="#00695C" />
+            </View>
+          </TouchableOpacity>
+          <View style={styles.nameContainer}>
+            <Text style={styles.profileName}>{name}</Text>
+            <TouchableOpacity onPress={handleNameEdit}>
+              <FontAwesome name="edit" size={20} color="#00695C" style={styles.editIcon} />
+            </TouchableOpacity>
+          </View>
         </View>
         <View style={styles.detailsContainer}>
-          <Text style={styles.label}>Email</Text>
-          <TextInput style={styles.input} placeholder="Enter your email" keyboardType="email-address" />
-          <Text style={styles.label}>Password</Text>
-          <TextInput style={styles.input} placeholder="Enter your password" secureTextEntry />
-          <Text style={styles.label}>Phone Number</Text>
-          <TextInput style={styles.input} placeholder="Enter your phone number" keyboardType="phone-pad" />
-          <Text style={styles.label}>Address</Text>
-          <TextInput style={styles.input} placeholder="Enter your address" />
+          <TextInput style={styles.input} placeholder="Email" keyboardType="email-address" />
+          <TextInput style={styles.input} placeholder="Phone Number" keyboardType="phone-pad" />
+          <TextInput style={styles.input} placeholder="Address" />
         </View>
         <View style={styles.actionsContainer}>
           <TouchableOpacity style={styles.actionButton} onPress={() => navigation.navigate('Home')}>
-            <FontAwesome name="cog" size={24} color="#007f66" />
-            <Text style={styles.actionButtonText}>Settings</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.actionButton} onPress={() => navigation.navigate('Home')}>
-            <FontAwesome name="sign-out" size={24} color="#007f66" />
+            <FontAwesome name="sign-out" size={24} color="#00695C" />
             <Text style={styles.actionButtonText}>Logout</Text>
           </TouchableOpacity>
         </View>
@@ -58,53 +94,56 @@ const ProfilePage = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0f0f0',
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#007f66',
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-    paddingTop: 20,
-  },
-  menuButton: {
-    marginRight: 16,
-  },
-  headerTitle: {
-    color: '#fff',
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  content: {
-    flex: 1,
-    padding: 16,
+    backgroundColor: '#f4f4f4',
   },
   profileContainer: {
     alignItems: 'center',
-    marginVertical: 20,
+    marginBottom: 30,
+  },
+  profileImage: {
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    marginBottom: 10,
+  },
+  editIconContainer: {
+    position: 'absolute',
+    bottom: 10,
+    right: 10,
+    backgroundColor: '#fff',
+    borderRadius: 15,
+    padding: 5,
+    elevation: 2,
+  },
+  nameContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   profileName: {
     fontSize: 24,
-    fontWeight: 'bold',
-    color: '#007f66',
-    marginTop: 10,
+    fontFamily: 'Poppins-SemiBold',
+    color: '#00695C',
+    marginRight: 10,
+  },
+  editIcon: {
+    marginLeft: 2,
   },
   detailsContainer: {
-    marginTop: 20,
-  },
-  label: {
-    fontSize: 16,
-    color: '#333',
-    marginBottom: 5,
+    marginBottom: 30,
   },
   input: {
     backgroundColor: '#fff',
-    padding: 10,
-    borderRadius: 5,
+    padding: 15,
+    borderRadius: 10,
     marginBottom: 15,
-    borderWidth: 1,
-    borderColor: '#ccc',
+    fontSize: 16,
+    fontFamily: 'Poppins-Regular',
+    color: '#333',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
   },
   actionsContainer: {
     marginTop: 20,
@@ -114,28 +153,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 15,
     paddingHorizontal: 20,
-    marginVertical: 10,
+    marginBottom: 15,
     backgroundColor: 'white',
     borderRadius: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 5,
-    elevation: 5,
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   actionButtonText: {
     fontSize: 18,
     marginLeft: 15,
-    color: '#007f66',
-  },
-  overlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    zIndex: 1,
+    color: '#00695C',
+    fontFamily: 'Poppins-Medium',
   },
 });
 

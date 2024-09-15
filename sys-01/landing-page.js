@@ -4,6 +4,7 @@ import { FontAwesome5, FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import Sidebar from './sidebar-nav';
 import MapView, { Marker } from 'react-native-maps';  // Import MapView
+import Header from './header-nav';
 
 const LandingPage = () => {
   const navigation = useNavigation();
@@ -51,15 +52,11 @@ const LandingPage = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={toggleSidebar} style={styles.menuButton}>
-          <FontAwesome name="bars" size={24} color="black" />
-        </TouchableOpacity>
-        <View style={styles.headerSpacer} />
-        <TouchableOpacity onPress={handleProfilePress} style={styles.profileButton}>
-          <FontAwesome name="user-circle" size={24} color="black" />
-        </TouchableOpacity>
-      </View>
+      <Header 
+        onMenuPress={toggleSidebar} 
+        onProfilePress={() => {}}
+        profileImageSource={require('./assets/profile-placeholder.jpg')} 
+      />
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {/* Hero Section with Image Background */}
@@ -305,10 +302,10 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   ctaButton: {
-    backgroundColor: '#00695C',
+    backgroundColor: 'rgba(0, 77, 64, 0.8)',
     paddingHorizontal: 20,
     paddingVertical: 12,
-    borderRadius: 15,
+    borderRadius: 25,
     alignSelf: 'center',
     marginTop: 15,
   },
@@ -319,10 +316,10 @@ const styles = StyleSheet.create({
   },
   mapButton: {
     marginTop: 15,
-    backgroundColor: '#00695C',
+    backgroundColor: 'rgba(0, 77, 64, 0.8)',
     paddingHorizontal: 20,
     paddingVertical: 12,
-    borderRadius: 15,
+    borderRadius: 25,
   },
   mapButtonText: {
     color: '#FFF',

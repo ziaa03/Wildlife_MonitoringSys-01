@@ -6,6 +6,9 @@ import ProfilePage from './profile-page';
 import LandingPage from './landing-page';
 import DiscoverPage from './discover-page';
 import MapScreen from './map-screen';
+import EducationalContent from './educational-content';
+import DonationPage from './donation-page';
+import SettingsPage from './settings-page';
 
 const Stack = createStackNavigator();
 
@@ -38,6 +41,9 @@ const App = () => {
         <Stack.Screen name="Discover" component={DiscoverPage} />
         <Stack.Screen name="Profile" component={ProfilePage} />
         <Stack.Screen name="MapScreen" component={MapScreen} />
+        <Stack.Screen name="EducationalContent" component={EducationalContent} />
+        <Stack.Screen name="DonationPage" component={DonationPage} />
+        <Stack.Screen name="SettingsPage" component={SettingsPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );
