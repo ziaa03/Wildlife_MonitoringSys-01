@@ -11,11 +11,11 @@ const IconText = ({ name, label, onPress }) => (
 );
 
 const Sidebar = ({ isOpen, onClose }) => {
-  const sidebarAnimation = useRef(new Animated.Value(-240)).current; // Increased width
+  const sidebarAnimation = useRef(new Animated.Value(-240)).current; 
 
   useEffect(() => {
     Animated.timing(sidebarAnimation, {
-      toValue: isOpen ? 0 : -240, // Match the width
+      toValue: isOpen ? 0 : -240,
       duration: 300,
       useNativeDriver: false,
     }).start();
@@ -33,9 +33,12 @@ const Sidebar = ({ isOpen, onClose }) => {
       <Animated.View style={[styles.sidebar, { left: sidebarAnimation }]}>
         <IconText name="home" label="Home" onPress={() => { onClose(); navigation.navigate('Landing'); }} />
         <IconText name="compass" label="Discover" onPress={() => { onClose(); navigation.navigate('Discover'); }} />
+        <IconText name="question-circle" label="Challenges" onPress={() => { onClose(); navigation.navigate('TrailHunt'); }} />
+
+        <View style={[styles.lineSeparator, { marginBottom: 25 }]} />
+        
         <IconText name="user" label="Profile" onPress={() => { onClose(); navigation.navigate('Profile'); }} />
         <IconText name="cog" label="Settings" onPress={() => { onClose(); navigation.navigate('SettingsPage'); }} />
-
       </Animated.View>
     </>
   );
@@ -46,7 +49,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     bottom: 0,
-    width: 240, // Increased width
+    width: 240, 
     backgroundColor: '#fff',
     padding: 20,
     paddingTop: 60,
@@ -78,6 +81,12 @@ const styles = StyleSheet.create({
     bottom: 0,
     backgroundColor: 'rgba(0,0,0,0.3)',
     zIndex: 1,
+  },
+  lineSeparator: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#CCC',
+    marginHorizontal: 0,
+    marginVertical: 20,
   },
 });
 
