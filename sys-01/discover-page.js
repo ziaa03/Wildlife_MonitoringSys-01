@@ -1,5 +1,11 @@
+// TO DO:
+// try to put the text on the card in a single coloured box below the image but still on the same card so that its clearer, add an arrow at the right side of the card 
+// latest sightings - to be able to see the latest sightings of animals in the area (!!)
+// learn - educational content (DONE - but need to add more content)
+// donation card (DONE - but need to add more content)
+
 import React, { useState } from 'react';
-import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import Sidebar from './sidebar-nav';
 import { useNavigation } from '@react-navigation/native';
@@ -27,11 +33,6 @@ const DiscoverPage = () => {
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
-  };
-
-  const handleProfilePress = () => {
-    navigation.navigate('Profile');
-    console.log('Navigating to Profile');
   };
 
   const features = [
@@ -62,7 +63,6 @@ const DiscoverPage = () => {
     <View style={styles.container}>
       <Header 
         onMenuPress={toggleSidebar} 
-        onProfilePress={() => {}}
         profileImageSource={require('./assets/profile-placeholder.jpg')} 
       />
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     color: 'black',
-    fontSize: 24,
+    fontSize: 28,
     fontFamily: 'Poppins-Bold',
     marginBottom: 16,
     marginLeft: 16,

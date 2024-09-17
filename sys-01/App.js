@@ -9,6 +9,8 @@ import MapScreen from './map-screen';
 import EducationalContent from './educational-content';
 import DonationPage from './donation-page';
 import SettingsPage from './settings-page';
+import TrailHunt from './trail-hunt';
+import TriviaQues from './trivia-ques';
 
 const Stack = createStackNavigator();
 
@@ -44,6 +46,8 @@ const App = () => {
         <Stack.Screen name="EducationalContent" component={EducationalContent} />
         <Stack.Screen name="DonationPage" component={DonationPage} />
         <Stack.Screen name="SettingsPage" component={SettingsPage} />
+        <Stack.Screen name="TrailHunt" component={TrailHunt} />
+        <Stack.Screen name="TriviaQues" component={TriviaQues} />
       </Stack.Navigator>
     </NavigationContainer>
   );

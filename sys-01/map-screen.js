@@ -1,16 +1,18 @@
-// MapScreen.js
+
+// interactive map button 
+
 import React from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 
 const MapScreen = ({ navigation }) => {
-  // Central coordinates for Semenggoh Wildlife Centre in decimal degrees
+  // central coordinates for Semenggoh Wildlife Centre in decimal degrees
   const centralLatitude = 1.399722;
   const centralLongitude = 110.324167;
   
-  // Define the region to display the Semenggoh area
-  const latitudeDelta = 0.02;  // Adjust this value to include more or less of the area
-  const longitudeDelta = 0.02; // Adjust this value to include more or less of the area
+  // region to display the semenggoh area 
+  const latitudeDelta = 0.02;  
+  const longitudeDelta = 0.02; 
 
   return (
     <View style={styles.container}>

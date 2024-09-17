@@ -1,6 +1,9 @@
+// TO DO:
+// integrate a payment gateway or handle donation logic PROPERLY
+
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert, ScrollView } from 'react-native';
-import { FontAwesome, Ionicons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import Sidebar from './sidebar-nav';
 import Header from './header-nav';
@@ -14,26 +17,19 @@ const DonationPage = () => {
     setSidebarOpen(!sidebarOpen);
   };
 
-  const handleProfilePress = () => {
-    navigation.navigate('Profile');
-  };
-
   const handleDonatePress = () => {
     if (!amount) {
       Alert.alert('Oops!', 'Please enter a donation amount. Even a small amount makes a big difference!');
       return;
     }
-
-    // Here you can integrate with a payment gateway or handle donation logic
-    Alert.alert('Thank You!', `You're amazing! You’ve donated $${amount}. We appreciate your support so much!`);
-    setAmount('');
+      Alert.alert('Thank You!', `You're amazing! You’ve donated $${amount}. We really appreciate your support so much!`);
+      setAmount('');
   };
 
   return (
     <View style={styles.container}>
       <Header 
         onMenuPress={toggleSidebar} 
-        onProfilePress={() => {}}
         profileImageSource={require('./assets/profile-placeholder.jpg')} 
       />
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
@@ -81,13 +77,10 @@ const styles = StyleSheet.create({
   headerSpacer: {
     flex: 1,
   },
-  profileButton: {
-    // You can adjust padding if needed
-  },
   content: {
     flex: 1,
     paddingHorizontal: 16,
-    paddingBottom: 20, // Added to avoid footer being cut off
+    paddingBottom: 20, 
   },
   headerTitle: {
     fontSize: 26,
@@ -99,13 +92,13 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 17,
     fontFamily: 'Poppins-Regular',
-    color: 'black', // Matching color
+    color: 'black', 
     marginBottom: 24,
-    lineHeight: 24, // Improve readability
+    lineHeight: 24, 
   },
   input: {
     height: 50,
-    borderColor: '#004D40', // Matching color
+    borderColor: '#004D40', 
     borderWidth: 2,
     borderRadius: 8,
     paddingHorizontal: 16,
@@ -115,7 +108,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
   },
   donateButton: {
-    backgroundColor: '#00796B', // Matching color
+    backgroundColor: '#00796B', 
     paddingVertical: 12,
     borderRadius: 25,
     alignItems: 'center',
@@ -134,13 +127,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   backButtonText: {
-    color: '#00796B', // Matching color
+    color: '#00796B', 
     fontSize: 16,
     fontFamily: 'Poppins-SemiBold',
     marginLeft: 8,
-  },
-  arrowIcon: {
-    // Optionally, you can add margin or padding to adjust positioning if needed
   },
 });
 

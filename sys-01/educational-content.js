@@ -1,3 +1,7 @@
+
+// TO DO: 
+// MAYBE: implement a dropdown for the content sections so we dont need separate pages for each section (DONE)
+
 import React, { useState } from 'react';
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity, LayoutAnimation } from 'react-native';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
@@ -14,10 +18,7 @@ const EducationalContent = () => {
     setSidebarOpen(!sidebarOpen);
   };
 
-  const handleProfilePress = () => {
-    navigation.navigate('Profile');
-  };
-
+  // dropdown for content sections
   const toggleSection = (index) => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setExpandedSection(expandedSection === index ? null : index);
@@ -78,7 +79,6 @@ const EducationalContent = () => {
     <View style={styles.container}>
       <Header 
         onMenuPress={toggleSidebar} 
-        onProfilePress={() => {}}
         profileImageSource={require('./assets/profile-placeholder.jpg')} 
       />
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
@@ -140,13 +140,10 @@ const styles = StyleSheet.create({
   headerSpacer: {
     flex: 1,
   },
-  profileButton: {
-    // You can adjust padding if needed
-  },
   content: {
     flex: 1,
     paddingHorizontal: 16,
-    paddingBottom: 20, // Added to avoid footer being cut off
+    paddingBottom: 20, 
   },
   backButton: {
     flexDirection: 'row',
@@ -160,9 +157,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-SemiBold',
     marginLeft: 8,
   },
-  arrowIcon: {
-    // Add margin or padding to adjust positioning if needed
-  },
   headerTitle: {
     fontSize: 28,
     fontFamily: 'Poppins-Bold',
@@ -174,7 +168,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Regular',
     color: '#333',
     marginBottom: 24,
-    lineHeight: 24, // Improve readability
+    lineHeight: 24, 
   },
   sectionCard: {
     flexDirection: 'row',
@@ -205,20 +199,20 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: 'Poppins-Regular',
     color: '#555',
-    lineHeight: 20, // Improve readability
+    lineHeight: 20, 
   },
   expandedContent: {
     backgroundColor: '#e6f3f1',
     borderRadius: 16,
     padding: 16,
-    marginTop: -8, // Adjust spacing to fit nicely with the card
+    marginTop: -8, 
     marginBottom: 16,
   },
   expandedText: {
     fontSize: 14,
     fontFamily: 'Poppins-Regular',
     color: '#333',
-    lineHeight: 20, // Improve readability
+    lineHeight: 20, 
   },
 });
 

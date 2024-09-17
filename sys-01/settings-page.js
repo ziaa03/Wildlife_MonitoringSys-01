@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Switch, Alert, ScrollView } from 'react-native';
-import { FontAwesome, Ionicons } from '@expo/vector-icons';
+import { FontAwesome} from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import Sidebar from './sidebar-nav';
 import Header from './header-nav';
 
 const SettingsPage = () => {
-  const navigation = useNavigation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
@@ -16,7 +15,6 @@ const SettingsPage = () => {
   };
 
   const handleSave = () => {
-    // Logic to save settings, e.g., making an API call
     Alert.alert('Settings Saved', 'Your settings have been updated successfully!');
   };
 
@@ -24,7 +22,6 @@ const SettingsPage = () => {
     <View style={styles.container}>
       <Header 
         onMenuPress={toggleSidebar} 
-        onProfilePress={() => navigation.navigate('Profile')}
         profileImageSource={require('./assets/profile-placeholder.jpg')} 
       />
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />

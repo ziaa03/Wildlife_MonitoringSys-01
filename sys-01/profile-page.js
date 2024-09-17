@@ -1,91 +1,133 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { View, Text, ScrollView, StyleSheet, TextInput, TouchableOpacity, Image, Alert } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
-import Sidebar from './sidebar-nav';
 import { useNavigation } from '@react-navigation/native';
+import * as ImagePicker from 'expo-image-picker';
+import Sidebar from './sidebar-nav';
 import Header from './header-nav';
-import * as ImagePicker from 'expo-image-picker'; // Image picker library
 
 const ProfilePage = () => {
   const navigation = useNavigation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [name, setName] = useState('Zia');
-  const [profileImage, setProfileImage] = useState(require('./assets/profile-placeholder.jpg'));
+  const [userProfile, setUserProfile] = useState({
+    name: 'Zia',
+    email: '',
+    phoneNumber: '',
+    address: '',
+    profileImage: require('./assets/profile-placeholder.jpg'),
+  });
 
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
-  };
+  const toggleSidebar = useCallback(() => {
+    setSidebarOpen(prevState => !prevState);
+  }, []);
 
-  const handleImagePick = async () => {
-    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (status !== 'granted') {
-      Alert.alert('Permission needed', 'You need to grant permission to access the camera roll.');
-      return;
+  const updateProfile = useCallback((field, value) => {
+    setUserProfile(prevProfile => ({
+      ...prevProfile,
+      [field]: value,
+    }));
+  }, []);
+
+  const handleImagePick = useCallback(async () => {
+    try {
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== 'granted') {
+        Alert.alert('Permission needed', 'You need to grant permission to access the camera roll.');
+        return;
+      }
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+
+      if (!result.canceled) {
+        updateProfile('profileImage', { uri: result.assets[0].uri });
+      }
+    } catch (error) {
+      console.error('Error picking image:', error);
+      Alert.alert('Error', 'Failed to pick image. Please try again.');
     }
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
+  }, [updateProfile]);
 
-    if (!result.cancelled) {
-      setProfileImage({ uri: result.uri });
-    }
-  };
-
-  const handleNameEdit = () => {
-    // Logic for editing the name, e.g., opening a prompt
+  const handleNameEdit = useCallback(() => {
     Alert.prompt('Edit Name', 'Enter your new name:', [
-      { text: 'Cancel' },
+      { text: 'Cancel', style: 'cancel' },
       {
         text: 'OK',
         onPress: (newName) => {
-          if (newName) {
-            setName(newName);
+          if (newName && newName.trim()) {
+            updateProfile('name', newName.trim());
           }
         },
       },
     ]);
-  };
+  }, [updateProfile]);
+
+  const handleLogout = useCallback(() => {
+    Alert.alert(
+      'Logout',
+      'Are you sure you want to logout?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'Logout', onPress: () => navigation.navigate('Home') },
+      ],
+      { cancelable: false }
+    );
+  }, [navigation]);
 
   return (
     <View style={styles.container}>
       <Header 
         onMenuPress={toggleSidebar} 
-        onProfilePress={() => {}}
-        profileImageSource={profileImage} 
+        profileImageSource={userProfile.profileImage} 
       />
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-      <ScrollView style={styles.content}>
+      <ScrollView style={styles.content} contentContainerStyle={styles.contentContainer}>
         <View style={styles.profileContainer}>
           <TouchableOpacity onPress={handleImagePick}>
             <Image
-              source={profileImage}
+              source={userProfile.profileImage}
               style={styles.profileImage}
             />
             <View style={styles.editIconContainer}>
-              <FontAwesome name="edit" size={20} color="#00695C" />
+              <FontAwesome name="camera" size={20} color="#00695C" />
             </View>
           </TouchableOpacity>
           <View style={styles.nameContainer}>
-            <Text style={styles.profileName}>{name}</Text>
+            <Text style={styles.profileName}>{userProfile.name}</Text>
             <TouchableOpacity onPress={handleNameEdit}>
               <FontAwesome name="edit" size={20} color="#00695C" style={styles.editIcon} />
             </TouchableOpacity>
           </View>
         </View>
         <View style={styles.detailsContainer}>
-          <TextInput style={styles.input} placeholder="Email" keyboardType="email-address" />
-          <TextInput style={styles.input} placeholder="Phone Number" keyboardType="phone-pad" />
-          <TextInput style={styles.input} placeholder="Address" />
+          <TextInput
+            style={styles.input}
+            placeholder="Email"
+            keyboardType="email-address"
+            value={userProfile.email}
+            onChangeText={(text) => updateProfile('email', text)}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Phone Number"
+            keyboardType="phone-pad"
+            value={userProfile.phoneNumber}
+            onChangeText={(text) => updateProfile('phoneNumber', text)}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Address"
+            value={userProfile.address}
+            onChangeText={(text) => updateProfile('address', text)}
+          />
         </View>
-        <View style={styles.actionsContainer}>
-          <TouchableOpacity style={styles.actionButton} onPress={() => navigation.navigate('Home')}>
-            <FontAwesome name="sign-out" size={24} color="#00695C" />
-            <Text style={styles.actionButtonText}>Logout</Text>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity style={styles.actionButton} onPress={handleLogout}>
+          <FontAwesome name="sign-out" size={24} color="#00695C" />
+          <Text style={styles.actionButtonText}>Logout</Text>
+        </TouchableOpacity>
       </ScrollView>
     </View>
   );
@@ -95,6 +137,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f4f4f4',
+  },
+  content: {
+    flex: 1,
+  },
+  contentContainer: {
+    padding: 20,
   },
   profileContainer: {
     alignItems: 'center',
@@ -108,11 +156,11 @@ const styles = StyleSheet.create({
   },
   editIconContainer: {
     position: 'absolute',
-    bottom: 10,
-    right: 10,
+    bottom: 0,
+    right: 0,
     backgroundColor: '#fff',
     borderRadius: 15,
-    padding: 5,
+    padding: 8,
     elevation: 2,
   },
   nameContainer: {
@@ -121,9 +169,10 @@ const styles = StyleSheet.create({
   },
   profileName: {
     fontSize: 24,
-    fontFamily: 'Poppins-SemiBold',
     color: '#00695C',
     marginRight: 10,
+    fontFamily: 'Poppins-Bold',
+    paddingTop: 5,
   },
   editIcon: {
     marginLeft: 2,
@@ -137,23 +186,19 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 15,
     fontSize: 16,
-    fontFamily: 'Poppins-Regular',
     color: '#333',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
     shadowRadius: 2,
     elevation: 2,
-  },
-  actionsContainer: {
-    marginTop: 20,
+    fontFamily: 'Poppins-Regular',
   },
   actionButton: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     paddingVertical: 15,
-    paddingHorizontal: 20,
-    marginBottom: 15,
     backgroundColor: 'white',
     borderRadius: 10,
     shadowColor: '#000',
@@ -166,7 +211,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginLeft: 15,
     color: '#00695C',
-    fontFamily: 'Poppins-Medium',
+    fontWeight: '500',
+    fontFamily: 'Poppins-SemiBold',
   },
 });
 
