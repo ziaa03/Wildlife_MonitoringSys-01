@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Switch, Alert, ScrollView } from 'react-native';
 import { FontAwesome} from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
 import Sidebar from './sidebar-nav';
 import Header from './header-nav';
 
@@ -44,7 +43,7 @@ const SettingsPage = () => {
           </View>
         </View>
         <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
-          <FontAwesome name="save" size={24} color="#fff" />
+          <FontAwesome name="save" size={24} color="#00695C" />
           <Text style={styles.saveButtonText}>Save</Text>
         </TouchableOpacity>
       </ScrollView>
@@ -100,22 +99,20 @@ const styles = StyleSheet.create({
   saveButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    backgroundColor: '#00695C',
+    justifyContent: 'center',
+    paddingVertical: 15,
+    backgroundColor: 'white',
     borderRadius: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
-    marginTop: 20,
-    justifyContent: 'center',
   },
   saveButtonText: {
     fontSize: 18,
-    color: '#fff',
-    marginLeft: 10,
+    color: '#00695C',
+    marginLeft: 15,
     fontFamily: 'Poppins-Bold',
   },
 });

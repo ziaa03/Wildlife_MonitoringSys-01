@@ -77,6 +77,10 @@ const ProfilePage = () => {
     );
   }, [navigation]);
 
+  const submitButton = useCallback(() => {
+    Alert.alert('Profile Updated', 'Your profile has been updated successfully!');
+  }, []);
+
   return (
     <View style={styles.container}>
       <Header 
@@ -124,6 +128,12 @@ const ProfilePage = () => {
             onChangeText={(text) => updateProfile('address', text)}
           />
         </View>
+
+        <TouchableOpacity style={styles.actionButton} onPress={submitButton}>
+          <FontAwesome name="save" size={24} color="#00695C" />
+          <Text style={styles.actionButtonText}>Save</Text>
+        </TouchableOpacity>
+        
         <TouchableOpacity style={styles.actionButton} onPress={handleLogout}>
           <FontAwesome name="sign-out" size={24} color="#00695C" />
           <Text style={styles.actionButtonText}>Logout</Text>
@@ -206,6 +216,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
+    marginBottom: 20,
   },
   actionButtonText: {
     fontSize: 18,

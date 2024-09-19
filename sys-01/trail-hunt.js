@@ -89,12 +89,12 @@ const TrailHunt = () => {
   const [allChallenges, setallChallenges] = useState('');
 
   useEffect(() => {
-    const challenge = 'Complete all tasks to win a prize!';
+    const challenge = 'Collect 400 points to win a prize!';
     setallChallenges(challenge);
   }, []);
 
   const handleGameSelection = (gameKey) => {
-    navigation.navigate('QuestionPage', { gameKey });
+    navigation.navigate('TriviaQues', { gameKey });
   };
 
   const featureData = Object.keys(tasks).map((key) => ({

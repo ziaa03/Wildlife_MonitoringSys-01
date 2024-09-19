@@ -11,6 +11,7 @@ import DonationPage from './donation-page';
 import SettingsPage from './settings-page';
 import TrailHunt from './trail-hunt';
 import TriviaQues from './trivia-ques';
+import LoginScreen from './login';
 
 const Stack = createStackNavigator();
 
@@ -38,7 +39,8 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Landing" screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Landing" component={LandingPage} />
         <Stack.Screen name="Discover" component={DiscoverPage} />
         <Stack.Screen name="Profile" component={ProfilePage} />
@@ -48,6 +50,7 @@ const App = () => {
         <Stack.Screen name="SettingsPage" component={SettingsPage} />
         <Stack.Screen name="TrailHunt" component={TrailHunt} />
         <Stack.Screen name="TriviaQues" component={TriviaQues} />
+        
       </Stack.Navigator>
     </NavigationContainer>
   );

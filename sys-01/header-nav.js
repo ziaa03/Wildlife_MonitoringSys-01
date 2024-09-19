@@ -11,7 +11,7 @@ const Header = ({ onMenuPress, profileImageSource }) => {
   };
 
   const handleQRCodePress = () => {
-    navigation.navigate('QRCodeScanner'); // Replace with the actual screen name for QR code scanning
+    navigation.navigate('QRCodeScanner'); 
   };
 
   return (
