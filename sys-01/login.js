@@ -1,73 +1,165 @@
 import React, { useState } from 'react';
-import { View, Text, Button, FlatList, Alert } from 'react-native';
-import axios from 'axios';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform, ScrollView, Alert } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { FontAwesome5 } from '@expo/vector-icons';
 
-const LAPTOP_IP = '192.168.68.106:3000'; // Your laptop's IP address
+const LAPTOP_IP = '192.168.0.8:8080'; // Your laptop's IP address
 
-const LoginScreen = () => {
-  const [users, setUsers] = useState([]);
-  const [testResponse, setTestResponse] = useState(null);
+const LoginScreen = ({ navigation }) => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
-  const fetchTestEndpoint = () => {
-    axios.get(`https://${LAPTOP_IP}/test`)
-      .then(response => {
-        console.log('Test Response status:', response.status);
-        console.log('Test Response headers:', JSON.stringify(response.headers));
-        setTestResponse(response.data.message);
-      })
-      .catch(error => {
-        console.error('Error fetching from test endpoint:', error);
-        Alert.alert('Error', 'Failed to fetch from test endpoint');
-      });
-  };
+  const handleLogin = () => {
+    console.log('Login attempt with:', username, password);
 
-  const fetchUsers = () => {
-    axios.get(`https://${LAPTOP_IP}/api/fetch/users_all`, {
-      headers: { 'Content-Type': 'application/json' },
+    fetch(`http://${LAPTOP_IP}/api/v1/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user_name: username,
+        user_password: password,
+      }),
     })
       .then(response => {
-        console.log('Response status:', response.status);
-        console.log('Response headers:', JSON.stringify(response.headers));
-        console.log('Success:', JSON.stringify(response.data));
-        setUsers(response.data);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Server response:', data); // Log the full response
+        if (data.login) { // Check for data.login instead of data.success
+          console.log('Login successful:', data);
+          navigation.navigate('Landing');
+        } else {
+          Alert.alert('Login Failed', data.message || 'Invalid username or password');
+        }
       })
       .catch(error => {
-        console.error('Error type:', typeof error);
-        console.error('Error name:', error.name);
-        console.error('Error message:', error.message);
-        console.error('Error stack:', error.stack);
-        if (error.response) {
-          console.error('Error response:', JSON.stringify(error.response.data));
-        }
-        Alert.alert('Error', 'Failed to fetch users');
+        console.error('Error during login:', error);
+        Alert.alert('Error', 'Failed to connect to the server. Please try again later.');
       });
   };
 
   return (
-    <View style={{ padding: 50 }}>
-      <Button title="Test Connection" onPress={fetchTestEndpoint} />
-      {testResponse && <Text>Test Response: {testResponse}</Text>}
-      <Button title="Fetch Users" onPress={fetchUsers} />
-      <FlatList
-        data={users}
-        keyExtractor={(item) => item._id}
-        renderItem={({ item }) => (
-          <View style={{ marginBottom: 10 }}>
-            <Text>User Name: {item.user_name}</Text>
-            <Text>Email: {item.user_email}</Text>
-            <Text>Phone: {item.user_phone}</Text>
-            <Text>Address: {item.user_address}</Text>
-            <Text>City: {item.user_city}</Text>
-            <Text>State: {item.user_state}</Text>
-            <Text>Zip: {item.user_zip}</Text>
-            <Text>Country: {item.user_country}</Text>
-            <Text>Role: {item.user_role}</Text>
-            <Text>Status: {item.user_status ? 'Active' : 'Inactive'}</Text>
+    <SafeAreaView style={styles.container}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.keyboardAvoidingView}
+      >
+        <ScrollView contentContainerStyle={styles.scrollView}>
+          <View style={styles.contentContainer}>
+            <Text style={styles.title}>Semenggoh Wildlife Centre</Text>
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.input}
+                placeholder="Username"
+                placeholderTextColor="#A0A0A0"
+                value={username}
+                onChangeText={setUsername}
+                keyboardType="email-address"
+                autoCapitalize="none"
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Password"
+                placeholderTextColor="#A0A0A0"
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry
+              />
+              <TouchableOpacity style={styles.button} onPress={handleLogin}>
+                <Text style={styles.buttonText}>
+                  Login <FontAwesome5 name="arrow-right" size={16} color="#FFF" />
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity>
+              <Text style={styles.forgotPassword}>Forgot Password?</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.registerButton}>
+              <Text style={styles.registerButtonText}>Create an Account</Text>
+            </TouchableOpacity>
           </View>
-        )}
-      />
-    </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#f4f4f4',
+  },
+  keyboardAvoidingView: {
+    flex: 1,
+  },
+  scrollView: {
+    flexGrow: 1,
+    justifyContent: 'center',
+  },
+  contentContainer: {
+    padding: 25,
+    width: '100%',
+    maxWidth: 400,
+    alignSelf: 'center',
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#00695C',
+    textAlign: 'center',
+    marginBottom: 30,
+    fontFamily: 'Poppins-SemiBold',
+  },
+  inputContainer: {
+    width: '100%',
+  },
+  input: {
+    backgroundColor: '#FFFFFF',
+    padding: 15,
+    borderRadius: 10,
+    fontSize: 16,
+    marginBottom: 15,
+    fontFamily: 'Poppins-Regular',
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
+  },
+  button: {
+    backgroundColor: '#00695C',
+    padding: 15,
+    borderRadius: 25,
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  buttonText: {
+    color: '#FFF',
+    fontSize: 18,
+    fontFamily: 'Poppins-Medium',
+  },
+  forgotPassword: {
+    color: '#00695C',
+    textAlign: 'center',
+    marginTop: 15,
+    fontFamily: 'Poppins-Regular',
+  },
+  registerButton: {
+    marginTop: 20,
+    padding: 15,
+    borderRadius: 25,
+    borderColor: '#00695C',
+    borderWidth: 1,
+  },
+  registerButtonText: {
+    color: '#00695C',
+    fontSize: 16,
+    textAlign: 'center',
+    fontFamily: 'Poppins-Medium',
+  },
+});
 
 export default LoginScreen;
