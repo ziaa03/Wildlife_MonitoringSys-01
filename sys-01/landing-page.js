@@ -6,7 +6,7 @@
 // fix navigation to other pages (!!) --> nested navigationContainer error (DONE)
 // 'Your bookings' navigates to Bookings and 'Learn More' button navigates to VisitDetails page but not implemented yet (!)
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ImageBackground, Image, FlatList, Dimensions, Linking } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -56,17 +56,17 @@ const LandingPage = () => {
   };
 
   // lets the app know which image is currently in view - updates the currentIndex state
-  const onHeroViewableItemsChanged = ({ viewableItems }) => {
+  const onHeroViewableItemsChanged = useCallback(({ viewableItems }) => {
     if (viewableItems.length > 0) {
       setCurrentHeroIndex(viewableItems[0].index);
     }
-  };
+  }, []);
 
-  const onVisitViewableItemsChanged = ({ viewableItems }) => {
+  const onVisitViewableItemsChanged = useCallback(({ viewableItems }) => {
     if (viewableItems.length > 0) {
       setCurrentVisitIndex(viewableItems[0].index);
     }
-  };
+  }, []);
 
   const renderHeroItem = ({ item }) => (
     <View style={styles.heroSectionWrapper}>
