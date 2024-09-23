@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingVi
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FontAwesome5 } from '@expo/vector-icons';
 
-const LAPTOP_IP = '192.168.0.8:8080'; // Your laptop's IP address
+const LAPTOP_IP = '192.168.68.106:8080'; // Your laptop's IP address
 
 const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');

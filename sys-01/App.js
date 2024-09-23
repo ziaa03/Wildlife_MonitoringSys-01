@@ -1,3 +1,5 @@
+import 'react-native-gesture-handler';
+import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -12,6 +14,7 @@ import SettingsPage from './settings-page';
 import TrailHunt from './trail-hunt';
 import TriviaQues from './trivia-ques';
 import LoginScreen from './login';
+import Bookings from './booking-page';
 
 const Stack = createStackNavigator();
 
@@ -50,10 +53,10 @@ const App = () => {
         <Stack.Screen name="SettingsPage" component={SettingsPage} />
         <Stack.Screen name="TrailHunt" component={TrailHunt} />
         <Stack.Screen name="TriviaQues" component={TriviaQues} />
-        
+        <Stack.Screen name="Bookings" component={Bookings} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
 
-export default App;
+export default gestureHandlerRootHOC(App);

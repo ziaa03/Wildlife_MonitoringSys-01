@@ -174,7 +174,11 @@ const LandingPage = () => {
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('Bookings')} style={styles.iconButton}>
             <FontAwesome5 name="calendar-check" size={28} color="#00695C" />
-            <Text style={styles.iconText}>Your Bookings</Text>
+            <Text style={styles.iconText}>Bookings</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('DonationPage')} style={styles.iconButton}>
+            <FontAwesome5 name="heart" size={28} color="#00695C" />
+            <Text style={styles.iconText}>Donations</Text>
           </TouchableOpacity>
         </View>
 
