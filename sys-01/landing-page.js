@@ -1,4 +1,3 @@
-
 // TO DO:
 // this will be the first page --> home in sidebar nav 
 // try to display the pfp from the profile page on all pages (DONE)
@@ -7,34 +6,44 @@
 // 'Your bookings' navigates to Bookings and 'Learn More' button navigates to VisitDetails page but not implemented yet (!)
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ImageBackground, Image, FlatList, Dimensions, Linking } from 'react-native';
+import { View, Text, StyleSheet, Pressable, ScrollView, ImageBackground, Image, FlatList, Dimensions, Linking } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import Sidebar from './sidebar-nav';
 import Header from './header-nav';
 
+// Import images
+import plant01 from './assets/plant-01.jpeg';
+import latest from './assets/latest.jpg';
+import visit1 from './assets/visit1.jpg';
+import visit2 from './assets/visit2.jpg';
+import visit3 from './assets/visit3.jpeg';
+import profilePlaceholder from './assets/profile-placeholder.jpg';
+
+
+FSDFJEOJ
 const tasks = {
   'Flora Identification': {
     description: 'Identify different types of plants and trees as you explore the trail.',
-    imageUrl: require('./assets/plant-01.jpeg'), 
+    imageUrl: plant01, 
   },
   'Fauna Trivia': {
     description: 'Answer wildlife trivia questions as you spot different animals.',
-    imageUrl: require('./assets/plant-01.jpeg'), 
+    imageUrl: plant01, 
   },
 };
 
 const { width } = Dimensions.get('window');
 
 const heroImages = [
-  { id: '1', source: require('./assets/latest.jpg'), title: 'Semenggoh Wildlife Centre', navigateTo: 'Discover' },
-  { id: '2', source: require('./assets/plant-01.jpeg'), title: 'Wildlife Trivia Challenge', navigateTo: 'TrailHunt' },
+  { id: '1', source: latest, title: 'Semenggoh Wildlife Centre', navigateTo: 'Discover' },
+  { id: '2', source: plant01, title: 'Wildlife Trivia Challenge', navigateTo: 'TrailHunt' },
 ];
 
 const visitImages = [
-  require('./assets/visit1.jpg'),
-  require('./assets/visit2.jpg'),
-  require('./assets/visit3.jpeg')
+  visit1,
+  visit2,
+  visit3
 ];
 
 const LandingPage = () => {
@@ -74,17 +83,17 @@ const LandingPage = () => {
         <View style={styles.heroOverlay}>
           <Text style={styles.title}>{item.title}</Text>
           {item.title === 'Wildlife Trivia Challenge' ? (
-            <TouchableOpacity style={styles.triviaButton} onPress={() => navigation.navigate(item.navigateTo)}>
+            <Pressable style={styles.triviaButton} onPress={() => navigation.navigate(item.navigateTo)}>
               <Text style={styles.triviaButtonText}>
                 Start Trivia <FontAwesome5 name="arrow-right" size={16} color="#fff" />
               </Text>
-            </TouchableOpacity>
+            </Pressable>
           ) : (
-            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate(item.navigateTo)}>
+            <Pressable style={styles.button} onPress={() => navigation.navigate(item.navigateTo)}>
               <Text style={styles.buttonText}>
                 Discover <FontAwesome5 name="arrow-right" size={16} color="#fff" />
               </Text>
-            </TouchableOpacity>
+            </Pressable>
           )}
         </View>
       </ImageBackground>
@@ -132,7 +141,7 @@ const LandingPage = () => {
     <View style={styles.container}>
       <Header 
         onMenuPress={toggleSidebar} 
-        profileImageSource={require('./assets/profile-placeholder.jpg')} 
+        profileImageSource={profilePlaceholder} 
       />
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       <ScrollView contentContainerStyle={styles.scrollContent}>
@@ -168,18 +177,18 @@ const LandingPage = () => {
 
         {/* other buttons - map and bookings? */}
         <View style={styles.iconSection}>
-          <TouchableOpacity onPress={() => navigation.navigate('MapScreen')} style={styles.iconButton}>
+          <Pressable onPress={() => navigation.navigate('MapScreen')} style={styles.iconButton}>
             <FontAwesome5 name="map-marker-alt" size={28} color="#00695C" />
             <Text style={styles.iconText}>Interactive Map</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Bookings')} style={styles.iconButton}>
+          </Pressable>
+          <Pressable onPress={() => navigation.navigate('Bookings')} style={styles.iconButton}>
             <FontAwesome5 name="calendar-check" size={28} color="#00695C" />
             <Text style={styles.iconText}>Bookings</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('DonationPage')} style={styles.iconButton}>
+          </Pressable>
+          <Pressable onPress={() => navigation.navigate('DonationPage')} style={styles.iconButton}>
             <FontAwesome5 name="heart" size={28} color="#00695C" />
             <Text style={styles.iconText}>Donations</Text>
-          </TouchableOpacity>
+          </Pressable>
         </View>
 
         <View style={[styles.lineSeparator, { marginBottom: 25 }]} />
@@ -208,9 +217,9 @@ const LandingPage = () => {
           <View style={styles.dotsContainer}>
             {visitImages.map((_, index) => renderDot(index, currentVisitIndex))}
           </View>
-          <TouchableOpacity style={styles.visitPlanning} onPress={() => navigation.navigate('VisitDetails')}>   
+          <Pressable style={styles.visitPlanning} onPress={() => navigation.navigate('VisitDetails')}>   
             <Text style={styles.visitPlanningText}>Learn More</Text>
-          </TouchableOpacity>
+          </Pressable>
         </View>
 
         <View style={styles.lineSeparator} />
@@ -221,22 +230,22 @@ const LandingPage = () => {
           <Text style={styles.sectionText}>Off Jalan Puncak Borneo, 93250 Siburan</Text>
           <Text style={styles.sectionText}>Phone: 082-618 325</Text>
           <Text style={styles.sectionText}>Open Daily: 8am - 4:30pm</Text>
-          <TouchableOpacity style={styles.mapButton} onPress={() => Linking.openURL('https://www.semenggohwildlife.org')}>
+          <Pressable style={styles.mapButton} onPress={() => Linking.openURL('https://www.semenggohwildlife.org')}>
             <Text style={styles.mapButtonText}>View on Map</Text>
-          </TouchableOpacity>
+          </Pressable>
         </View>
 
         {/* footer */}
         <View style={styles.footer}>
           <Text style={styles.footerText}>© 2024 Semenggoh Wildlife Centre</Text>
           <View style={styles.footerLinks}>
-            <TouchableOpacity onPress={() => Linking.openURL('mailto:info@semenggohwildlife.org')}>
+            <Pressable onPress={() => Linking.openURL('mailto:info@semenggohwildlife.org')}>
               <Text style={styles.footerLink}>Contact</Text>
-            </TouchableOpacity>
+            </Pressable>
             <Text style={styles.footerDivider}>|</Text>
-            <TouchableOpacity onPress={() => Linking.openURL('https://sarawakforestry.com/semenggoh-nature-reserve/')}>
+            <Pressable onPress={() => Linking.openURL('https://sarawakforestry.com/semenggoh-nature-reserve/')}>
               <Text style={styles.footerLink}>Website</Text>
-            </TouchableOpacity>
+            </Pressable>
           </View>
         </View>
       </ScrollView>
@@ -296,9 +305,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     fontFamily: 'Poppins-SemiBold',
     textAlign: 'center',
-    textShadowColor: 'rgba(0, 0, 0, 0.75)',
-    textShadowOffset: { width: -1, height: 1 },
-    textShadowRadius: 10,
+    textShadow: '1px 1px 1px #000',
   },
   button: {
     backgroundColor: 'rgba(0, 77, 64, 0.8)',
