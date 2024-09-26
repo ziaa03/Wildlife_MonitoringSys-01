@@ -1,7 +1,0 @@
-COMPONENTS
-
-1. FlatList
-- Lazy Loading: Only renders items that are currently visible on the screen.
-- Item Recycling: Reuses item components to improve performance.
-- Smooth Scrolling: Provides a smooth scrolling experience for large lists.
-
