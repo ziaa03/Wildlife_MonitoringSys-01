@@ -3,7 +3,6 @@ import { Layout, Menu, Button, Card, Row, Col, Typography, Space} from 'antd';
 import { UserOutlined, LaptopOutlined, NotificationOutlined, EnvironmentOutlined, CalendarOutlined, HeartOutlined } from '@ant-design/icons';
 import './styles.css';  // Make sure this import is at the top
 
-
 const { Header, Content, Footer, Sider } = Layout;
 const { Title, Paragraph, Text } = Typography;
 
@@ -41,12 +40,11 @@ const sidebarItems = [
 
 const WildlifeCenterLandingPage = () => {
   useBodyClass('main-page-body');
-  const [collapsed, setCollapsed] = useState(true); // State to control sidebar collapsed/expanded
+  const [collapsed, setCollapsed] = useState(true);
 
   return (
-    <Layout className="layout wildlife-center-layout" style={{ minHeight: '100vh' }}>
-      {/* Header */}
-      <Header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative', zIndex: 10 }}>
+    <Layout className="layout wildlife-center-layout" style={{ minHeight: '100vh', width: '100%' }}>
+      <Header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative', zIndex: 10, padding: '0 24px' }}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <img src="/src/assets/logo.png" alt="Wildlife Center Logo" className="logo" />
           <Title level={3} style={{ color: 'white', margin: 0, marginLeft: 5 }}>
@@ -54,7 +52,6 @@ const WildlifeCenterLandingPage = () => {
           </Title>
         </div>
 
-        {/* Horizontal Navigation Menu */}
         <Menu
           theme="dark"
           mode="horizontal"
@@ -69,26 +66,24 @@ const WildlifeCenterLandingPage = () => {
         />
       </Header>
 
-      {/* Layout with Sidebar and Content */}
       <Layout>
-        {/* Left Sidebar */}
         <Sider
           width={200}
           theme="light"
           collapsible
           collapsed={collapsed}
-          onMouseEnter={() => setCollapsed(false)}  // Expand sidebar on hover
-          onMouseLeave={() => setCollapsed(true)}   // Collapse sidebar on mouse leave
+          onMouseEnter={() => setCollapsed(false)}
+          onMouseLeave={() => setCollapsed(true)}
           style={{
-            position: 'absolute',
+            position: 'fixed',
             left: 0,
-            top: 64,  // To stay below the header
-            bottom: 50,  // To stay above the footer
+            top: 64,
+            bottom: 50,
             backgroundColor: '#f0f2f5',
             transition: 'width 0.2s ease',
-            zIndex: 1000, // Ensures it's above content
-            height: 'calc(100vh - 114px)', // Full height between header and footer
-            overflow: 'hidden',  // Hide content on collapse
+            zIndex: 1000,
+            height: 'calc(100vh - 114px)',
+            overflow: 'hidden',
           }}
         >
           <Menu
@@ -99,17 +94,10 @@ const WildlifeCenterLandingPage = () => {
           />
         </Sider>
 
-        {/* Main Content Area */}
-        <Layout
-          style={{
-            padding: '24px',
-            position: 'relative',
-            zIndex: 1,  // Content stays below the sidebar when it expands
-          }}
-        >
-          <Content>
-            <Row gutter={[16, 16]} justify="center">
-              <Col span={24} md={12}>
+        <Layout style={{ marginLeft: 80 }}>
+          <Content style={{ padding: '24px', minHeight: 280 }}>
+            <Row gutter={[16, 16]}>
+              <Col xs={24} md={12}>
                 <img
                   src="/src/assets/latest.jpg"
                   alt="Wildlife Center"
@@ -117,7 +105,7 @@ const WildlifeCenterLandingPage = () => {
                   className="fade-in"
                 />
               </Col>
-              <Col span={24} md={12}>
+              <Col xs={24} md={12}>
                 <Title level={2} className="fade-in">Welcome to Our Wildlife Center</Title>
                 <Paragraph className="fade-in">
                   Our wildlife center is dedicated to the conservation and protection of local fauna. 
@@ -168,23 +156,22 @@ const WildlifeCenterLandingPage = () => {
         </Layout>
       </Layout>
 
-      {/* Footer */}
       <Footer style={{ textAlign: 'center', backgroundColor: '#001529', color: 'white', zIndex: 10 }}>
         <Row gutter={[16, 16]}>
-          <Col span={24} md={8}>
+          <Col xs={24} md={8}>
             <Title level={4} style={{ color: 'white' }}>About Us</Title>
             <Paragraph style={{ color: 'white' }}>
               We are committed to wildlife conservation and education.
             </Paragraph>
           </Col>
-          <Col span={24} md={8}>
+          <Col xs={24} md={8}>
             <Title level={4} style={{ color: 'white' }}>Contact</Title>
             <Paragraph style={{ color: 'white' }}>
               Phone: (555) 123-4567<br />
               Email: info@wildlifecenter.org
             </Paragraph>
           </Col>
-          <Col span={24} md={8}>
+          <Col xs={24} md={8}>
             <Title level={4} style={{ color: 'white' }}>Follow Us</Title>
             <Paragraph style={{ color: 'white' }}>
               Facebook | Twitter | Instagram
