@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
+/* MAIN LAYOUT */
 * {
   font-family: 'Poppins', sans-serif !important;
   box-sizing: border-box;
@@ -9,51 +10,76 @@ body, .ant-typography, .ant-btn {
   font-family: 'Poppins', sans-serif !important;
 }
 
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-}
-
-body.main-page-body {
+html, body, body.main-page-body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-.layout {
-  flex-grow: 1;
-}
-
-.wildlife-center-layout {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  width: 100% !important;
-}
-
-.ant-layout {
-  display: flex;
-  flex: 1;
-  width: 100% !important;
-}
-
+/* OVERRIDE ANT DEFAULT DESIGNS */
 .ant-layout-content {
   flex-grow: 1;
-  padding: 24px;
+  padding: 22px;
   width: 100%;
+}
+
+.ant-layout-header {
+  background-color: #002e29;
+  color: #faf3dd;
+  height: 80px; /* Increased height */
+  display: flex;
+  align-items: center; /* Center content vertically */
+  padding-left: 5px;
+}
+
+.ant-layout-sider {
+  background-color: white;
+}
+
+.ant-layout-sider-trigger {
+  background-color: white !important;
+  color: #002e29 !important;
 }
 
 .ant-layout-footer {
   text-align: center;
-  background-color: #001529;
+  background-color: #002e29;
   color: white;
 }
 
+.ant-menu {
+  background-color: white;
+  color: #002e29;
+}
+
+.ant-menu-title-content {
+  color: #002e29;
+}
+
+.ant-menu-item-icon {
+  color: #002e29 !important;
+}
+
+/* HEADER */
+.logo-container {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+}
+
 .logo {
-  max-width: 100%;
-  width: 50px;
+  height: 58px;
+  margin-right: 8px;
+}
+
+.header-title {
+  color: white;
+  margin: 0;
+  font-size: 26px;
+}
+
+.main-content-background {
+  background: #fff;
 }
 
 .shortcut-button {
@@ -65,10 +91,6 @@ body.main-page-body {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-.shortcut-button-icon {
-  margin-right: 8px;
-}
-
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -76,26 +98,6 @@ body.main-page-body {
 
 .fade-in {
   animation: fadeIn 0.5s ease-in;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .ant-layout-header {
-    padding: 0 12px;
-  }
-  
-  .ant-layout-content {
-    padding: 12px;
-  }
-  
-  .ant-layout-sider {
-    position: fixed;
-    z-index: 1000;
-  }
-  
-  .ant-layout-sider-collapsed {
-    transform: translateX(-100%);
-  }
 }
 
 /* Ensure full width */
@@ -162,3 +164,146 @@ body.main-page-body {
   margin-top: 8px;
 }
   
+.image-carousel {
+  overflow: hidden;
+}
+
+.fade-in {
+  animation: fadeIn 1s ease-in;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.shortcut-button {
+  min-width: 120px;
+}
+
+
+
+
+
+.landing-page {
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+}
+
+.image-carousel {
+  width: 100%;
+  height: 700px;
+  overflow: hidden;
+  margin-bottom: 32px;
+}
+
+.hero-section {
+  text-align: center;
+  padding: 40px 0;
+}
+
+.fade-in {
+  animation: fadeIn 1.5s ease-in;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Info Card Styling */
+.info-card {
+  border-radius: 10px;
+  background-color: #F7F4E9; /* Beige */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 20px;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+}
+
+.info-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15);
+}
+
+.info-card .ant-card-meta-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #2C5F2D; /* Dark Green */
+}
+
+.info-card .ant-btn {
+  background-color: #2C5F2D; /* Dark Green */
+  border: none;
+  border-radius: 6px;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.info-card .ant-btn:hover {
+  background-color: #4CAF50; /* Lighter Green */
+}
+
+/* Poacher Alert Section */
+.alert-card {
+  background-color: #FFD54F; /* Alert Yellow */
+  color: #444;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  animation: scaleIn 1.2s ease-in;
+}
+
+@keyframes scaleIn {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* News Feed Section */
+.news-card {
+  background-color: #E8F5E9; /* Light Green */
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+/* Visit Card */
+.visit-card {
+  background-color: #2C5F2D; /* Dark Green */
+  color: #F7F4E9; /* Beige Text */
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  text-align: center;
+}
+
+.visit-card p {
+  color: #F7F4E9; /* Beige Text */
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .image-carousel {
+    height: 400px;
+  }
+
+  .info-card .ant-btn {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .visit-card {
+    padding: 20px;
+  }
+}
+
+
+
+
+
+
+
+
+

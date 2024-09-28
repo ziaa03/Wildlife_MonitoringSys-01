@@ -4,6 +4,7 @@ import { Spin, ConfigProvider } from 'antd'; // Import Ant Design components
 import 'antd/dist/reset.css'; // Reset Ant Design styles for consistency
 import LandingPage from './landing-page';
 import LoginScreen from './login-page';
+import MainLayout from './main-layout';
 
 const App = () => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -11,7 +12,6 @@ const App = () => {
   useEffect(() => {
     // Load Google Fonts dynamically
     const link = document.createElement('link');
-    link.href = 'https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap';
     link.rel = 'stylesheet';
     document.head.appendChild(link);
 
@@ -30,11 +30,13 @@ const App = () => {
   return (
     <ConfigProvider theme={{ token: { colorPrimary: '#52c41a' } }}> {/* ConfigProvider for global theme customization */}
       <Router>
+        <MainLayout>
         <Routes>
           <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/login" element={<LoginScreen />} />
           <Route path="/landing" element={<LandingPage />} />
         </Routes>
+        </MainLayout>
       </Router>
     </ConfigProvider>
   );

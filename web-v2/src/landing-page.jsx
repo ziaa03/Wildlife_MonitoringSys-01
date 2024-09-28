@@ -1,186 +1,143 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Menu, Button, Card, Row, Col, Typography, Space} from 'antd';
-import { UserOutlined, LaptopOutlined, NotificationOutlined, EnvironmentOutlined, CalendarOutlined, HeartOutlined } from '@ant-design/icons';
-import './styles.css';  // Make sure this import is at the top
+import { Typography, Row, Col, Card, Button, Carousel, List } from 'antd';
+import { EnvironmentOutlined, CalendarOutlined, HeartOutlined, AlertOutlined, NotificationOutlined } from '@ant-design/icons';
 
-const { Header, Content, Footer, Sider } = Layout;
 const { Title, Paragraph, Text } = Typography;
 
-const useBodyClass = (className) => {
+const LandingPage = () => {
+  const [images, setImages] = useState([]);
+  const [newsFeed, setNewsFeed] = useState([]);
+
   useEffect(() => {
-    document.body.classList.add(className);
-    return () => {
-      document.body.classList.remove(className);
-    };
-  }, [className]);
-};
+    // Simulating image loading
+    setImages([
+      '/src/assets/latest.jpg',
+      '/src/assets/visit1.jpg',
+      '/src/assets/visit2.jpg',
+      '/src/assets/visit3.jpeg',
+    ]);
 
-const sidebarItems = [
-  {
-    key: '1',
-    icon: <UserOutlined />,
-    label: 'Home',
-  },
-  {
-    key: '2',
-    icon: <LaptopOutlined />,
-    label: 'About',
-  },
-  {
-    key: '3',
-    icon: <NotificationOutlined />,
-    label: 'Visit Us',
-  },
-  {
-    key: '4',
-    icon: <NotificationOutlined />,
-    label: 'Contact',
-  },
-];
-
-const WildlifeCenterLandingPage = () => {
-  useBodyClass('main-page-body');
-  const [collapsed, setCollapsed] = useState(true);
+    // Simulating news feed loading
+    setNewsFeed([
+      { title: 'New Orangutan Arrival', description: 'A young orangutan has been rescued and brought to the center.' },
+      { title: 'Volunteer Program Update', description: 'New opportunities to volunteer with the Wildlife Center.' },
+      { title: 'Conservation Achievements', description: 'Celebrating our success in protecting endangered species.' }
+    ]);
+  }, []);
 
   return (
-    <Layout className="layout wildlife-center-layout" style={{ minHeight: '100vh', width: '100%' }}>
-      <Header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative', zIndex: 10, padding: '0 24px' }}>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <img src="/src/assets/logo.png" alt="Wildlife Center Logo" className="logo" />
-          <Title level={3} style={{ color: 'white', margin: 0, marginLeft: 5 }}>
-            Semenggoh Wildlife Center
-          </Title>
-        </div>
-
-        <Menu
-          theme="dark"
-          mode="horizontal"
-          defaultSelectedKeys={['1']}
-          style={{ flex: 1, justifyContent: 'flex-end' }}
-          items={[
-            { key: 'home', label: 'Home' },
-            { key: 'about', label: 'About' },
-            { key: 'visit', label: 'Visit Us' },
-            { key: 'contact', label: 'Contact' },
-          ]}
-        />
-      </Header>
-
-      <Layout>
-        <Sider
-          width={200}
-          theme="light"
-          collapsible
-          collapsed={collapsed}
-          onMouseEnter={() => setCollapsed(false)}
-          onMouseLeave={() => setCollapsed(true)}
-          style={{
-            position: 'fixed',
-            left: 0,
-            top: 64,
-            bottom: 50,
-            backgroundColor: '#f0f2f5',
-            transition: 'width 0.2s ease',
-            zIndex: 1000,
-            height: 'calc(100vh - 114px)',
-            overflow: 'hidden',
-          }}
-        >
-          <Menu
-            mode="inline"
-            defaultSelectedKeys={['1']}
-            style={{ height: '100%' }}
-            items={sidebarItems}
-          />
-        </Sider>
-
-        <Layout style={{ marginLeft: 80 }}>
-          <Content style={{ padding: '24px', minHeight: 280 }}>
-            <Row gutter={[16, 16]}>
-              <Col xs={24} md={12}>
+    <div className="landing-page">
+      {/* Carousel Section */}
+      <Row gutter={[16, 16]}>
+        <Col span={24}>
+          <Carousel autoplay effect="fade" className="image-carousel">
+            {images.map((image, index) => (
+              <div key={index}>
                 <img
-                  src="/src/assets/latest.jpg"
-                  alt="Wildlife Center"
-                  style={{ width: '100%', borderRadius: 8 }}
-                  className="fade-in"
+                  src={image}
+                  alt={`Wildlife Center ${index + 1}`}
+                  style={{ width: '100%', height: '700px', objectFit: 'cover' }}
                 />
-              </Col>
-              <Col xs={24} md={12}>
-                <Title level={2} className="fade-in">Welcome to Our Wildlife Center</Title>
-                <Paragraph className="fade-in">
-                  Our wildlife center is dedicated to the conservation and protection of local fauna. 
-                  We provide a safe haven for injured and orphaned animals, offering rehabilitation 
-                  services and educational programs to promote wildlife awareness.
-                </Paragraph>
-              </Col>
-            </Row>
+              </div>
+            ))}
+          </Carousel>
+        </Col>
+      </Row>
 
-            <Row justify="center" style={{ marginTop: 32, marginBottom: 32 }}>
-              <Space size="large">
-                <Button
-                  type="primary"
-                  icon={<EnvironmentOutlined className="shortcut-button-icon" />}
-                  className="shortcut-button"
-                >
-                  Map
-                </Button>
-                <Button
-                  type="primary"
-                  icon={<CalendarOutlined className="shortcut-button-icon" />}
-                  className="shortcut-button"
-                >
-                  Bookings
-                </Button>
-                <Button
-                  type="primary"
-                  icon={<HeartOutlined className="shortcut-button-icon" />}
-                  className="shortcut-button"
-                >
-                  Donate
-                </Button>
-              </Space>
-            </Row>
+      {/* Hero Section */}
+      <Row gutter={[16, 16]} style={{ marginTop: 32, textAlign: 'center' }}>
+        <Col span={24}>
+          <Title level={2} className="fade-in">Welcome to Semenggoh Wildlife Center</Title>
+          <Paragraph className="fade-in">
+            The Semenggoh Wildlife Centre is a sanctuary for orangutans in Borneo. Established in 1975, the centre is dedicated to the rehabilitation of orangutans that have been injured, orphaned, or rescued from captivity.
+          </Paragraph>
+        </Col>
+      </Row>
 
-            <Card title="Visitation Information" style={{ marginBottom: 32 }} className="fade-in">
-              <Paragraph>
-                <Text strong>Hours:</Text> Monday - Sunday, 9:00 AM - 5:00 PM
-              </Paragraph>
-              <Paragraph>
-                <Text strong>Admission:</Text> Adults $15, Children (3-12) $10, Seniors $12
-              </Paragraph>
-              <Paragraph>
-                <Text strong>Address:</Text> 123 Wildlife Lane, Nature City, NC 12345
-              </Paragraph>
-            </Card>
-          </Content>
-        </Layout>
-      </Layout>
+      {/* Info Cards Section */}
+      <Row gutter={[16, 16]} justify="center" className="mt-8">
+        <Col xs={24} sm={12} md={8}>
+          <Card
+            hoverable
+            className="info-card slide-up"
+            actions={[
+              <Button type="primary" icon={<EnvironmentOutlined />} block>Explore</Button>
+            ]}
+          >
+            <Card.Meta title="Orangutan Encounters" description="Get up close with our gentle giants." />
+          </Card>
+        </Col>
+        <Col xs={24} sm={12} md={8}>
+          <Card
+            hoverable
+            className="info-card slide-up"
+            actions={[
+              <Button type="primary" icon={<CalendarOutlined />} block>Schedule</Button>
+            ]}
+          >
+            <Card.Meta title="Feeding Sessions" description="Watch our orangutans during meal times." />
+          </Card>
+        </Col>
+        <Col xs={24} sm={12} md={8}>
+          <Card
+            hoverable
+            className="info-card slide-up"
+            actions={[
+              <Button type="primary" icon={<HeartOutlined />} block>Support</Button>
+            ]}
+          >
+            <Card.Meta title="Conservation Efforts" description="Learn about our protection programs." />
+          </Card>
+        </Col>
+      </Row>
 
-      <Footer style={{ textAlign: 'center', backgroundColor: '#001529', color: 'white', zIndex: 10 }}>
-        <Row gutter={[16, 16]}>
-          <Col xs={24} md={8}>
-            <Title level={4} style={{ color: 'white' }}>About Us</Title>
-            <Paragraph style={{ color: 'white' }}>
-              We are committed to wildlife conservation and education.
+      {/* Poacher Alert System Section */}
+      <Row justify="center" style={{ marginTop: 50, textAlign: 'center' }}>
+        <Col xs={24} sm={20} md={12}>
+          <Card className="alert-card scale-up" title={<><AlertOutlined /> Poacher Alert System</>} bordered={false}>
+            <Paragraph className="fade-in">
+              <Text strong>Stay informed:</Text> Receive real-time alerts about poaching activity in the nearby areas and help us protect endangered species. Our monitoring system sends out instant notifications whenever suspicious activities are detected.
             </Paragraph>
-          </Col>
-          <Col xs={24} md={8}>
-            <Title level={4} style={{ color: 'white' }}>Contact</Title>
-            <Paragraph style={{ color: 'white' }}>
-              Phone: (555) 123-4567<br />
-              Email: info@wildlifecenter.org
+            <Button type="danger" size="large" block>Sign up for Alerts</Button>
+          </Card>
+        </Col>
+      </Row>
+
+      {/* News Feed Section */}
+      <Row justify="center" style={{ marginTop: 50, textAlign: 'center' }}>
+        <Col xs={24} sm={20} md={12}>
+          <Card className="news-card" title={<><NotificationOutlined /> Latest News</>} bordered={false}>
+            <List
+              itemLayout="vertical"
+              dataSource={newsFeed}
+              renderItem={item => (
+                <List.Item>
+                  <List.Item.Meta title={item.title} description={item.description} />
+                </List.Item>
+              )}
+            />
+          </Card>
+        </Col>
+      </Row>
+
+      {/* Visitation Info Section */}
+      <Row justify="center" style={{ marginTop: 32, textAlign: 'center' }}>
+        <Col xs={24} sm={20} md={12}>
+          <Card title="Visitation Information" className="fade-in visit-card">
+            <Paragraph>
+              <Text strong>Hours:</Text> Monday - Sunday, 9:00 AM - 5:00 PM
             </Paragraph>
-          </Col>
-          <Col xs={24} md={8}>
-            <Title level={4} style={{ color: 'white' }}>Follow Us</Title>
-            <Paragraph style={{ color: 'white' }}>
-              Facebook | Twitter | Instagram
+            <Paragraph>
+              <Text strong>Admission:</Text> Adults $15, Children (3-12) $10, Seniors $12
             </Paragraph>
-          </Col>
-        </Row>
-      </Footer>
-    </Layout>
+            <Paragraph>
+              <Text strong>Address:</Text> 123 Wildlife Lane, Nature City, NC 12345
+            </Paragraph>
+          </Card>
+        </Col>
+      </Row>
+    </div>
   );
 };
 
-export default WildlifeCenterLandingPage;
+export default LandingPage;
