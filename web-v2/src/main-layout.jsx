@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Layout, Menu, Breadcrumb } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
 import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
@@ -7,6 +7,7 @@ const { Header, Content, Footer, Sider } = Layout;
 
 const MainLayout = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
   const sidebarItems = [
@@ -38,9 +39,26 @@ const MainLayout = ({ children }) => {
     return breadcrumbItems;
   };
 
+  // Handle scroll event
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      if (scrollTop > 50) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Header className="header">
+      <Header className={`header ${scrolled ? 'scrolled' : ''}`}>
         <div className="logo-container">
           <img src="/src/assets/logo.png" alt="Wildlife Center Logo" className="logo" />
           <h1 className="header-title">Semenggoh Wildlife Center</h1>

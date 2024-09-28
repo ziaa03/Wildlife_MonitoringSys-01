@@ -16,6 +16,12 @@ html, body, body.main-page-body {
   min-height: 100vh;
 }
 
+/* Ensure full width */
+.ant-row, .ant-col {
+  padding: 15px;
+  width: 100%;
+}
+
 /* OVERRIDE ANT DEFAULT DESIGNS */
 .ant-layout-content {
   flex-grow: 1;
@@ -26,10 +32,20 @@ html, body, body.main-page-body {
 .ant-layout-header {
   background-color: #002e29;
   color: #faf3dd;
-  height: 80px; /* Increased height */
+  height: 80px;
   display: flex;
+  justify-content: center; /* Center content horizontally */
   align-items: center; /* Center content vertically */
   padding-left: 5px;
+  position: sticky; /* Make the header stick to the top */
+  top: 0;
+  z-index: 1000; /* Ensure the header is above other content */
+  transition: all 0.3s ease-in-out; /* Smooth transition for animations */
+}
+
+.ant-layout-header.scrolled {
+  height: 60px; /* Reduce height when scrolling */
+  background-color: #001f1a; /* Darker color on scroll */
 }
 
 .ant-layout-sider {
@@ -64,7 +80,7 @@ html, body, body.main-page-body {
 .logo-container {
   display: flex;
   align-items: center;
-  padding: 8px;
+  justify-content: center; /* Center logo and title */
 }
 
 .logo {
@@ -98,15 +114,6 @@ html, body, body.main-page-body {
 
 .fade-in {
   animation: fadeIn 0.5s ease-in;
-}
-
-/* Ensure full width */
-.ant-row, .ant-col {
-  width: 100%;
-}
-
-.ant-card {
-  width: 100%;
 }
 
 
@@ -163,141 +170,180 @@ html, body, body.main-page-body {
   color: #00695C;
   margin-top: 8px;
 }
-  
-.image-carousel {
-  overflow: hidden;
-}
 
-.fade-in {
-  animation: fadeIn 1s ease-in;
-}
+/* LANDING PAGE */
 
-@keyframes fadeIn {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
-}
-
-.shortcut-button {
-  min-width: 120px;
-}
-
-
-
-
-
-.landing-page {
-  font-family: 'Roboto', sans-serif;
-  color: #333;
-}
-
-.image-carousel {
-  width: 100%;
-  height: 700px;
-  overflow: hidden;
-  margin-bottom: 32px;
-}
-
+/* Hero Section */
 .hero-section {
-  text-align: center;
-  padding: 40px 0;
+  padding: 60px 0;
+  background-color: white;
 }
 
-.fade-in {
-  animation: fadeIn 1.5s ease-in;
+.hero-content {
+  padding: 0 40px;
+}
+
+.hero-text h1 {
+  font-size: 2.5rem;
+  color: #002e29;
+  margin-bottom: 20px;
+}
+
+.hero-text p {
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+/* Discover Section */
+.discover-section {
+  padding: 60px 0;
+  background-color: #e8f5e9;
+}
+
+.section-title {
+  text-align: center;
+  color: #002e29;
+  margin-bottom: 40px;
+}
+
+.discover-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.discover-card .ant-card-cover img {
+  height: 200px;
+  object-fit: cover;
+}
+
+.discover-card .ant-card-meta-title {
+  font-size: 1.2rem;
+  color: #002e29;
+}
+
+.discover-card .ant-card-meta-description {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.discover-button {
+  background-color: #026454;
+  border-color: #026454;
+  margin-top: auto;
+}
+
+.discover-button:hover {
+  background-color: #04927a !important;
+  border-color: #004d40 !important;
+}
+
+/* Info Sections */
+/* Info Sections */
+.info-section {
+  padding: 60px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.alert-section, .news-section, .visit-section {
+  background-color: white;
+}
+
+.alert-card, .news-card, .visit-card {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.alert-card .ant-card-head,
+.news-card .ant-card-head,
+.visit-card .ant-card-head {
+  background-color: transparent;
+  border-bottom: 2px solid #002e29;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.alert-card .ant-card-head-title,
+.news-card .ant-card-head-title,
+.visit-card .ant-card-head-title {
+  color: #002e29;
+  font-size: 1.5rem;
+}
+
+.alert-button {
+  background-color: #002e29;
+  border-color: #002e29;
+  transition: all 0.3s ease;
+}
+
+.alert-button:hover {
+  background-color: #004d40;
+  border-color: #004d40;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Animations */
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 @keyframes fadeIn {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
-/* Info Card Styling */
-.info-card {
-  border-radius: 10px;
-  background-color: #F7F4E9; /* Beige */
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  padding: 20px;
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+.alert-section {
+  animation: 1s ease-out 0s 1 slideInFromLeft;
 }
 
-.info-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15);
+.news-section {
+  animation: 1s ease-out 0s 1 slideInFromRight;
 }
 
-.info-card .ant-card-meta-title {
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: #2C5F2D; /* Dark Green */
+.visit-section {
+  animation: 1s ease-out 0s 1 fadeIn;
 }
 
-.info-card .ant-btn {
-  background-color: #2C5F2D; /* Dark Green */
-  border: none;
-  border-radius: 6px;
-  padding: 12px;
-  font-size: 16px;
-  font-weight: 500;
-  transition: background-color 0.3s ease;
-}
-
-.info-card .ant-btn:hover {
-  background-color: #4CAF50; /* Lighter Green */
-}
-
-/* Poacher Alert Section */
-.alert-card {
-  background-color: #FFD54F; /* Alert Yellow */
-  color: #444;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-  animation: scaleIn 1.2s ease-in;
-}
-
-@keyframes scaleIn {
-  0% { transform: scale(0.8); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
-}
-
-/* News Feed Section */
-.news-card {
-  background-color: #E8F5E9; /* Light Green */
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-}
-
-/* Visit Card */
-.visit-card {
-  background-color: #2C5F2D; /* Dark Green */
-  color: #F7F4E9; /* Beige Text */
-  border-radius: 10px;
-  padding: 30px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-  text-align: center;
-}
-
-.visit-card p {
-  color: #F7F4E9; /* Beige Text */
-}
-
-/* Media Queries */
+/* Responsive adjustments */
 @media (max-width: 768px) {
-  .image-carousel {
-    height: 400px;
+  .info-section {
+    padding: 40px 0;
   }
 
-  .info-card .ant-btn {
-    font-size: 14px;
-    padding: 10px;
-  }
-
-  .visit-card {
-    padding: 20px;
+  .alert-card .ant-card-head-title,
+  .news-card .ant-card-head-title,
+  .visit-card .ant-card-head-title {
+    font-size: 1.2rem;
   }
 }
+
+
 
 
 
