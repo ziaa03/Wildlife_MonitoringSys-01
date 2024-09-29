@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Menu, Breadcrumb } from 'antd';
+import { Layout, Menu, Breadcrumb, Row, Col, Typography } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
-import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
+import { UserOutlined, LaptopOutlined, NotificationOutlined, CalendarOutlined, TrophyOutlined, SettingOutlined, EnvironmentOutlined, ClockCircleOutlined, DollarOutlined } from '@ant-design/icons';
 
 const { Header, Content, Footer, Sider } = Layout;
+const { Text } = Typography;
 
 const MainLayout = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
@@ -12,9 +13,11 @@ const MainLayout = ({ children }) => {
 
   const sidebarItems = [
     { key: '/', icon: <UserOutlined />, label: <Link to="/">Home</Link> },
-    { key: '/about', icon: <LaptopOutlined />, label: <Link to="/about">About</Link> },
-    { key: '/visit', icon: <NotificationOutlined />, label: <Link to="/visit">Visit Us</Link> },
-    { key: '/contact', icon: <NotificationOutlined />, label: <Link to="/contact">Contact</Link> },
+    { key: '/about', icon: <LaptopOutlined />, label: <Link to="/about">About Us</Link> },
+    { key: '/alerts', icon: <NotificationOutlined />, label: <Link to="/alerts">Alerts</Link> },
+    { key: '/bookings', icon: <CalendarOutlined />, label: <Link to="/bookings">Bookings</Link> },
+    { key: '/challenges', icon: <TrophyOutlined />, label: <Link to="/challenges">Challenges</Link> },
+    { key: '/settings', icon: <SettingOutlined />, label: <Link to="/settings">Settings</Link> },
   ];
 
   const getBreadcrumbItems = () => {
@@ -81,9 +84,25 @@ const MainLayout = ({ children }) => {
               {children}
             </div>
           </Content>
-          <Footer style={{ textAlign: 'center' }}>
-        © 2024 Semenggoh Wildlife Centre. All rights reserved.
-      </Footer>
+          <Footer className="site-footer">
+            <Row gutter={[16, 16]} justify="space-between" align="top">
+              <Col xs={24} sm={12} md={6}>
+                <Text strong><ClockCircleOutlined /> Hours</Text>
+                <br />
+                <Text>Monday - Sunday, 9:00 AM - 5:00 PM</Text>
+              </Col>
+              <Col xs={24} md={6}>
+                <Text strong><EnvironmentOutlined /> Address</Text>
+                <br />
+                <Text>123 Wildlife Lane, Nature City, NC 12345</Text>
+              </Col>
+              <Col xs={24} sm={24} md={6}>
+                <Text strong>© 2024 Semenggoh Wildlife Centre</Text>
+                <br />
+                <Text>All rights reserved</Text>
+              </Col>
+            </Row>
+          </Footer>
         </Layout>
       </Layout>
     </Layout>

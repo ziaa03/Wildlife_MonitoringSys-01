@@ -10,7 +10,7 @@ const LandingPage = () => {
   const discoverSectionRef = useRef(null);
 
   useEffect(() => {
-    setHeroImage('/src/assets/login-pg.jpg');
+    setHeroImage('/src/assets/latest.jpg');
     setNewsFeed([
       { title: 'New Orangutan Arrival', description: 'A young orangutan has been rescued and brought to the center.' },
       { title: 'Volunteer Program Update', description: 'New opportunities to volunteer with the Wildlife Center.' },
@@ -26,23 +26,25 @@ const LandingPage = () => {
 
   return (
     <div className="landing-page">
-      {/* Hero Section */}
-      <Row gutter={0} align="middle" className="hero-section">
-        <Col xs={24} md={12} className="hero-content">
-          <div className="hero-text">
-            <Title level={1}>Discover the beauty of Borneo's wildlife and join us in our conservation efforts.</Title>
-            <Paragraph>
-              The Semenggoh Wildlife Centre is a sanctuary for orangutans in Borneo. Established in 1975, the centre is dedicated to the rehabilitation of orangutans that have been injured, orphaned, or rescued from captivity.
-            </Paragraph>
-            <Button type="primary" size="large" onClick={scrollToDiscover} className="discover-button">
-              Discover More
-            </Button>
-          </div>
-        </Col>
-        <Col xs={24} md={12} className="hero-image">
-          <img src={heroImage} alt="Wildlife Center" style={{ width: '100%', height: 'auto' }} />
-        </Col>
-      </Row>
+      {/* Hero Section with Backdrop */}
+      <div className="hero-section" style={{backgroundImage: `url(${heroImage})`, backgroundSize: 'cover', backgroundPosition: 'center'}}>
+        <div className="hero-overlay">
+          <Row gutter={0} align="middle" className="hero-content">
+            <Col xs={24} md={12}>
+              <div className="hero-text">
+                <Title level={1}>Discover the beauty of Borneo's wildlife and join us in our conservation efforts.</Title>
+                <Paragraph>
+                  The Semenggoh Wildlife Centre is a sanctuary for orangutans in Borneo. Established in 1975, the centre is dedicated to the rehabilitation of orangutans that have been injured, orphaned, or rescued from captivity.
+                </Paragraph>
+                <Button type="primary" size="large" onClick={scrollToDiscover} className="discover-button">
+                  Discover More
+                </Button>
+              </div>
+            </Col>
+          </Row>
+        </div>
+      </div>
+
 
       {/* Discover Section */}
       <div ref={discoverSectionRef} className="discover-section">
@@ -133,15 +135,10 @@ const LandingPage = () => {
       <div className="info-section visit-section">
         <Row justify="center">
           <Col xs={24}>
-            <Card title="Visitation Information" className="visit-card" bordered={false}>
+            <Card title="Admission Info" className="admission-card" bordered={false}>       
               <Paragraph>
-                <Text strong>Hours:</Text> Monday - Sunday, 9:00 AM - 5:00 PM
-              </Paragraph>
-              <Paragraph>
-                <Text strong>Admission:</Text> Adults $15, Children (3-12) $10, Seniors $12
-              </Paragraph>
-              <Paragraph>
-                <Text strong>Address:</Text> 123 Wildlife Lane, Nature City, NC 12345
+                <strong>Foreigners: </strong>Adults RM10, Children (6-17) RM5 <br />
+                <strong>Malaysian:  </strong>Adults RM5, Children (6-17) RM2
               </Paragraph>
             </Card>
           </Col>

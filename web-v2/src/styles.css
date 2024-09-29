@@ -50,6 +50,7 @@ html, body, body.main-page-body {
 
 .ant-layout-sider {
   background-color: white;
+  padding-top: 12px;
 }
 
 .ant-layout-sider-trigger {
@@ -173,27 +174,78 @@ html, body, body.main-page-body {
 
 /* LANDING PAGE */
 
-/* Hero Section */
 .hero-section {
-  padding: 60px 0;
-  background-color: white;
+  position: relative;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  padding: 0;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Darkens the background image */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .hero-content {
-  padding: 0 40px;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.hero-text {
+  text-align: left;
 }
 
 .hero-text h1 {
-  font-size: 2.5rem;
-  color: #002e29;
+  font-size: 3rem;
+  color: white;
   margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .hero-text p {
-  font-size: 1.1rem;
-  color: #333;
+  font-size: 1.2rem;
+  color: white;
   margin-bottom: 30px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
+
+.discover-button {
+  background-color: #026454;
+  border-color: #026454;
+  font-size: 1.1rem;
+  height: auto;
+  padding: 10px 20px;
+}
+
+.discover-button:hover {
+  background-color: #04927a;
+  border-color: #04927a;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .hero-text h1 {
+    font-size: 2rem;
+  }
+
+  .hero-text p {
+    font-size: 1rem;
+  }
+}
+
 
 /* Discover Section */
 .discover-section {
@@ -251,7 +303,7 @@ html, body, body.main-page-body {
   background-color: white;
 }
 
-.alert-card, .news-card, .visit-card {
+.alert-card, .news-card, .admission-card {
   background-color: transparent;
   border: none;
   box-shadow: none;
@@ -259,7 +311,7 @@ html, body, body.main-page-body {
 
 .alert-card .ant-card-head,
 .news-card .ant-card-head,
-.visit-card .ant-card-head {
+.admission-card .ant-card-head {
   background-color: transparent;
   border-bottom: 2px solid #002e29;
   padding-left: 0;
@@ -268,7 +320,7 @@ html, body, body.main-page-body {
 
 .alert-card .ant-card-head-title,
 .news-card .ant-card-head-title,
-.visit-card .ant-card-head-title {
+.admission-card .ant-card-head-title {
   color: #002e29;
   font-size: 1.5rem;
 }
@@ -338,13 +390,38 @@ html, body, body.main-page-body {
 
   .alert-card .ant-card-head-title,
   .news-card .ant-card-head-title,
-  .visit-card .ant-card-head-title {
+  .admission-card .ant-card-head-title {
     font-size: 1.2rem;
   }
 }
 
 
 
+
+.site-footer {
+  background-color: #002e29;
+  color: #faf3dd;
+  padding: 24px;
+}
+
+.site-footer .ant-typography {
+  color: #faf3dd;
+}
+
+.site-footer .ant-row {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.site-footer .anticon {
+  margin-right: 8px;
+}
+
+@media (max-width: 768px) {
+  .site-footer .ant-col {
+    margin-bottom: 16px;
+  }
+}
 
 
 
