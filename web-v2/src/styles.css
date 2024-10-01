@@ -171,8 +171,8 @@ html, body, body.main-page-body {
   margin-top: 8px;
 }
 
-/* LANDING PAGE */
 
+/* LANDING PAGE */
 .hero-section {
   position: relative;
   height: 100vh;
@@ -245,7 +245,8 @@ html, body, body.main-page-body {
   }
 }
 
-/* Discover Section */
+
+/* Discover Section in LANDING PAGE */
 .discover-section {
   padding: 60px 0;
   background-color: #e8f5e9;
@@ -379,11 +380,11 @@ html, body, body.main-page-body {
   }
 }
 
-/* Description text color */
 .description-text {
   color: black !important;
 }
 
+/* FOOTER */
 .site-footer {
   background-color: #002e29;
   color: #faf3dd;
@@ -485,13 +486,13 @@ html.has-scroll-dragging {
 
 /* New styles for the booking page */
 .booking-card .ant-btn-primary {
-  background-color: #006400;
+  background-color: #00695C;
   border-color: #006400;
 }
 
 .booking-card .ant-btn-primary:hover,
 .booking-card .ant-btn-primary:focus {
-  background-color: #005000;
+  background-color: #00695C;
   border-color: #005000;
 }
 
@@ -504,4 +505,42 @@ html.has-scroll-dragging {
 .additional-info .ant-card-body,
 .admission-info .ant-card-body {
   color: black;
+}
+
+.ant-btn-primary {
+  background-color: #00695C;
+  border-color: #006400;
+}
+
+.support-hero-section {
+  background-size: cover; /* Corrected CSS property */
+  background-position: center; /* Corrected CSS property */
+  height: 300px; /* Set the desired height */
+  position: relative;
+}
+
+.support-hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5); /* Optional: Add overlay for better text visibility */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.support-hero-text .ant-typography {
+  color: white !important;
+  padding-top: 5px;
+}
+
+.education-section-title {
+  padding-top: 40px;
+}
+
+.education-section .ant-btn-primary:hover {
+  background-color: #004d40 !important;
+  border-color: #004d40;
 }
