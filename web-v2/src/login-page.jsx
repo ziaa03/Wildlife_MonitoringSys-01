@@ -4,7 +4,7 @@ import { Form, Input, Button, Typography, message } from 'antd';
 import { ArrowRightOutlined } from '@ant-design/icons'; // For button icon
 import './styles.css';
 
-const LAPTOP_IP = '192.168.0.16:8080'; // Your laptop's IP address
+const LAPTOP_IP = 'cos30045.xyz'; // Your laptop's IP address
 
 const { Title } = Typography;
 
@@ -14,7 +14,7 @@ const LoginScreen = () => {
   const handleLogin = (values) => {
     const { username, password } = values;
 
-    fetch(`http://${LAPTOP_IP}/api/v1/login`, {
+    fetch(`https://${LAPTOP_IP}/api/v1/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
