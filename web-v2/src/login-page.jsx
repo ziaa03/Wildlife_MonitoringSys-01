@@ -4,7 +4,7 @@ import { Form, Input, Button, Typography, message } from 'antd';
 import { ArrowRightOutlined } from '@ant-design/icons'; // For button icon
 import './styles.css';
 
-const LAPTOP_IP = '192.168.68.111:8080'; // Your laptop's IP address
+const LAPTOP_IP = '192.168.0.16:8080'; // Your laptop's IP address
 
 const { Title } = Typography;
 
@@ -33,7 +33,7 @@ const LoginScreen = () => {
       .then((data) => {
         if (data.login) { // Check for data.login
           message.success('Login successful');
-          navigate('/landing'); // Navigate to landing page
+          navigate('/about');
         } else {
           message.error(data.message || 'Invalid username or password');
         }
