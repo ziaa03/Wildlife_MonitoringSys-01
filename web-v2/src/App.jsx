@@ -5,6 +5,9 @@ import 'antd/dist/reset.css'; // Reset Ant Design styles for consistency
 import LandingPage from './landing-page';
 import LoginScreen from './login-page';
 import MainLayout from './main-layout';
+import 'locomotive-scroll/dist/locomotive-scroll.css';
+import PoacherAlertSystem from './alert-system';
+import BookingsPage from './bookings';
 
 const App = () => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -34,7 +37,9 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/login" element={<LoginScreen />} />
-          <Route path="/landing" element={<LandingPage />} />
+          <Route path="/about" element={<LandingPage />} />
+          <Route path="/alerts" element={<PoacherAlertSystem />} />
+          <Route path="/bookings" element={<BookingsPage />} />
         </Routes>
         </MainLayout>
       </Router>
