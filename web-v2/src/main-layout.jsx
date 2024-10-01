@@ -3,7 +3,7 @@ import { Layout, Menu, Breadcrumb, Row, Col, Typography } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
 import LocomotiveScroll from 'locomotive-scroll'; // Import Locomotive Scroll
 import 'locomotive-scroll/dist/locomotive-scroll.css'; // Import the styles
-import { UserOutlined, LaptopOutlined, NotificationOutlined, CalendarOutlined, TrophyOutlined, SettingOutlined, EnvironmentOutlined, ClockCircleOutlined } from '@ant-design/icons';
+import { UserOutlined, LaptopOutlined, NotificationOutlined, CalendarOutlined, TrophyOutlined, SettingOutlined, EnvironmentOutlined, ClockCircleOutlined, HeartOutlined } from '@ant-design/icons';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { Text } = Typography;
@@ -21,6 +21,7 @@ const MainLayout = ({ children }) => {
     { key: '/bookings', icon: <CalendarOutlined />, label: <Link to="/bookings">Bookings</Link> },
     { key: '/challenges', icon: <TrophyOutlined />, label: <Link to="/challenges">Challenges</Link> },
     { key: '/settings', icon: <SettingOutlined />, label: <Link to="/settings">Settings</Link> },
+    { key: '/support', icon: <HeartOutlined />, label: <Link to="/support">Support</Link> },
   ];
 
   const getBreadcrumbItems = () => {

@@ -8,6 +8,7 @@ import MainLayout from './main-layout';
 import 'locomotive-scroll/dist/locomotive-scroll.css';
 import PoacherAlertSystem from './alert-system';
 import BookingsPage from './bookings';
+import SupportPage from './support-page';
 
 const App = () => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -40,6 +41,7 @@ const App = () => {
           <Route path="/about" element={<LandingPage />} />
           <Route path="/alerts" element={<PoacherAlertSystem />} />
           <Route path="/bookings" element={<BookingsPage />} />
+          <Route path="/support" element={<SupportPage />} />
         </Routes>
         </MainLayout>
       </Router>

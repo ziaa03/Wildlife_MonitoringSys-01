@@ -55,9 +55,6 @@ const LandingPage = () => {
                 <Paragraph data-scroll data-scroll-speed="2">
                   The Semenggoh Wildlife Centre is a sanctuary for orangutans in Borneo. Established in 1975, the centre is dedicated to the rehabilitation of orangutans that have been injured, orphaned, or rescued from captivity.
                 </Paragraph>
-                <Button type="primary" size="large" onClick={scrollToDiscover} className="discover-button" data-scroll data-scroll-speed="3">
-                  Discover More
-                </Button>
               </div>
             </Col>
           </Row>
@@ -66,13 +63,13 @@ const LandingPage = () => {
 
 {/* Discover Section */}
 <div className="discover-section" data-scroll-section>
-  <Title level={2} className="section-title" data-scroll>Discover Our Programs</Title>
+  <Title level={2} className="section-title" data-scroll>Explore</Title>
   <Row gutter={[24, 24]} justify="center">
     <Col xs={24} sm={12} md={8} data-scroll>
       <Card
         hoverable
         className="discover-card"
-        cover={<img alt="Interactive Map" src="/src/assets/latest.jpg" />}
+        cover={<img alt="Interactive Map" src="/src/assets/map.png" />}
       >
         <Card.Meta 
           title="Interactive Map" 
@@ -110,7 +107,7 @@ const LandingPage = () => {
           title="Educational Resources" 
           description="Explore the wonders of Semenggoh Wildlife Centre and learn how you can contribute to conservation efforts."
         />
-        <Link to="/donation">
+        <Link to="/support">
           <Button type="primary" icon={<HeartOutlined />} block className="discover-button">
             Support
           </Button>
