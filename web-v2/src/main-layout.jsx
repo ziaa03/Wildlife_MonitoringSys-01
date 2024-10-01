@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Layout, Menu, Breadcrumb, Row, Col, Typography } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
-import { UserOutlined, LaptopOutlined, NotificationOutlined, CalendarOutlined, TrophyOutlined, SettingOutlined, EnvironmentOutlined, ClockCircleOutlined, DollarOutlined } from '@ant-design/icons';
+import LocomotiveScroll from 'locomotive-scroll'; // Import Locomotive Scroll
+import 'locomotive-scroll/dist/locomotive-scroll.css'; // Import the styles
+import { UserOutlined, LaptopOutlined, NotificationOutlined, CalendarOutlined, TrophyOutlined, SettingOutlined, EnvironmentOutlined, ClockCircleOutlined } from '@ant-design/icons';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { Text } = Typography;
@@ -10,6 +12,7 @@ const MainLayout = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const scrollRef = useRef(null); // Use a ref for the scroll container
 
   const sidebarItems = [
     { key: '/', icon: <UserOutlined />, label: <Link to="/">Home</Link> },
@@ -42,7 +45,22 @@ const MainLayout = ({ children }) => {
     return breadcrumbItems;
   };
 
-  // Handle scroll event
+  useEffect(() => {
+    // Initialize Locomotive Scroll
+    const locoScroll = new LocomotiveScroll({
+      el: scrollRef.current, // Use the ref for the scroll container
+      smooth: true,
+      lerp: 0.1,
+      getDirection: true,
+    });
+
+    // Destroy scroll on component unmount
+    return () => {
+      if (locoScroll) locoScroll.destroy();
+    };
+  }, []);
+
+  // Handle scroll event for header styling
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
@@ -67,6 +85,7 @@ const MainLayout = ({ children }) => {
           <h1 className="header-title">Semenggoh Wildlife Center</h1>
         </div>
       </Header>
+
       <Layout>
         <Sider collapsible collapsed={collapsed} onCollapse={setCollapsed}>
           <Menu
@@ -77,24 +96,31 @@ const MainLayout = ({ children }) => {
             items={sidebarItems}
           />
         </Sider>
-        <Layout className="site-layout">
+
+        {/* Main content wrapper with Locomotive Scroll */}
+        <Layout className="site-layout" ref={scrollRef} data-scroll-container>
           <Content style={{ margin: '0 16px' }}>
+            {/* Breadcrumb */}
             <Breadcrumb style={{ margin: '16px 0' }} items={getBreadcrumbItems()} />
-            <div className="main-content-background" style={{ padding: 24, minHeight: 360 }}>
+
+            {/* Main Content */}
+            <div className="main-content-background" data-scroll-section style={{ padding: 24, minHeight: 360 }}>
               {children}
             </div>
           </Content>
+
+          {/* Footer */}
           <Footer className="site-footer">
             <Row gutter={[16, 16]} justify="space-between" align="top">
               <Col xs={24} sm={12} md={6}>
                 <Text strong><ClockCircleOutlined /> Hours</Text>
                 <br />
-                <Text>Monday - Sunday, 9:00 AM - 5:00 PM</Text>
+                <Text>Monday - Sunday, 8:00 AM - 4:30 PM</Text>
               </Col>
               <Col xs={24} md={6}>
                 <Text strong><EnvironmentOutlined /> Address</Text>
                 <br />
-                <Text>123 Wildlife Lane, Nature City, NC 12345</Text>
+                <Text>Off To Jalan Puncak Borneo, 93250 Siburan</Text>
               </Col>
               <Col xs={24} sm={24} md={6}>
                 <Text strong>© 2024 Semenggoh Wildlife Centre</Text>
