@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingVi
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FontAwesome5 } from '@expo/vector-icons';
 
-const LAPTOP_IP = '192.168.68.106:8080'; // Your laptop's IP address
+const LAPTOP_IP = 'cos30045.xyz'; 
 
 const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
@@ -12,7 +12,7 @@ const LoginScreen = ({ navigation }) => {
   const handleLogin = () => {
     console.log('Login attempt with:', username, password);
 
-    fetch(`http://${LAPTOP_IP}/api/v1/login`, {
+    fetch(`https://${LAPTOP_IP}/api/v1/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
