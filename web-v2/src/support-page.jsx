@@ -1,43 +1,26 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Typography, Row, Col, Card, Button, InputNumber, Progress, List, Avatar, Collapse } from 'antd';
-import { DollarOutlined, UserOutlined, VideoCameraOutlined, FileTextOutlined } from '@ant-design/icons';
-import LocomotiveScroll from 'locomotive-scroll';
+import React, { useState, useEffect } from 'react';
+import { Typography, Row, Col, Card, Button, InputNumber, List, Avatar, Collapse } from 'antd';
+import { DollarOutlined, UserOutlined } from '@ant-design/icons';
 
-const { Title, Paragraph, Text } = Typography;
+const { Title, Paragraph } = Typography;
 const { Panel } = Collapse;
 
 const SupportPage = () => {
   const [donationAmount, setDonationAmount] = useState(50);
   const [totalRaised, setTotalRaised] = useState(75000);
-  const [goalAmount, setGoalAmount] = useState(100000);
+  const [goalAmount] = useState(100000);
   const [topDonors, setTopDonors] = useState([]);
-  const scrollRef = useRef(null);
 
   useEffect(() => {
-    // Initialize Locomotive Scroll
-    const scroll = new LocomotiveScroll({
-      el: scrollRef.current,
-      smooth: true,
-      multiplier: 1,
-      class: 'is-revealed'
-    });
-
-    // Set example top donors
     setTopDonors([
       { name: 'John Doe', amount: 1000 },
       { name: 'Jane Smith', amount: 750 },
       { name: 'Bob Johnson', amount: 500 },
     ]);
-
-    // Cleanup function
-    return () => {
-      if (scroll) scroll.destroy();
-    }
   }, []);
 
   const handleDonate = () => {
     setTotalRaised(prevTotal => prevTotal + donationAmount);
-    // Here you would typically handle the actual donation process
     alert(`Thank you for your donation of $${donationAmount}!`);
   };
 
@@ -55,14 +38,14 @@ const SupportPage = () => {
   ];
 
   return (
-    <div className="donations-page" data-scroll-container ref={scrollRef}>
-      <div className="support-hero-section" data-scroll-section style={{backgroundImage: `url('/src/assets/bridge.jpg')`}}>
+    <div className="donations-page">
+      <div className="support-hero-section" style={{backgroundImage: `url('/src/assets/bridge.jpg')`}}>
         <div className="support-hero-overlay">
           <Row gutter={0} align="middle" className="hero-content">
             <Col xs={24} md={12}>
               <div className="support-hero-text">
-                <Title level={2} data-scroll data-scroll-speed="1">Explore the wonders of our wildlife centre and Support Our Conservation Efforts</Title>
-                <Paragraph data-scroll data-scroll-speed="2">
+                <Title level={2}>Explore the wonders of our wildlife centre and Support Our Conservation Efforts</Title>
+                <Paragraph>
                   Your donation helps us protect and rehabilitate Borneo's endangered wildlife, especially orangutans.
                 </Paragraph>
               </div>
@@ -71,7 +54,7 @@ const SupportPage = () => {
         </div>
       </div>
 
-      <div className="donation-section" data-scroll-section>
+      <div className="donation-section">
         <Row gutter={[24, 24]} justify="center">
           <Col xs={24} md={12}>
             <Card title="Make a Donation" className="donation-card">
@@ -92,7 +75,7 @@ const SupportPage = () => {
         </Row>
       </div>
 
-      <div className="top-donors-section" data-scroll-section>
+      <div className="top-donors-section">
         <Card title="Top Donors" className="top-donors-card">
           <List
             itemLayout="horizontal"
@@ -110,8 +93,8 @@ const SupportPage = () => {
         </Card>
       </div>
 
-      <div className="education-section" data-scroll-section>
-        <Title level={2} className="education-section-title" data-scroll>Educational Resources</Title>
+      <div className="education-section">
+        <Title level={2} className="education-section-title">Educational Resources</Title>
         <Paragraph>
           Learn more about our conservation efforts and the wildlife we protect with these resources:
         </Paragraph>
@@ -120,7 +103,7 @@ const SupportPage = () => {
             <Panel 
               header={
                 <span>
-                  {resource.icon} {resource.title} - {resource.type}
+                  {resource.title} - {resource.type}
                 </span>
               } 
               key={index}

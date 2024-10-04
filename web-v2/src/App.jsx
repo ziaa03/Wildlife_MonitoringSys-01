@@ -5,7 +5,6 @@ import 'antd/dist/reset.css'; // Reset Ant Design styles for consistency
 import LandingPage from './landing-page';
 import LoginScreen from './login-page';
 import MainLayout from './main-layout';
-import 'locomotive-scroll/dist/locomotive-scroll.css';
 import PoacherAlertSystem from './alert-system';
 import BookingsPage from './bookings';
 import SupportPage from './support-page';

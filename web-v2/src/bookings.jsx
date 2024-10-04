@@ -1,30 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Typography, Row, Col, Card, Button, Form, Input, DatePicker, InputNumber, Select, Space } from 'antd';
 import { CalendarOutlined, TeamOutlined, DollarOutlined, InfoCircleOutlined } from '@ant-design/icons';
-import LocomotiveScroll from 'locomotive-scroll';
 
-const { Title, Paragraph, Text } = Typography;
+const { Title, Paragraph } = Typography;
 const { Option } = Select;
 
 const BookingsPage = () => {
   const [heroImage, setHeroImage] = useState('');
-  const scrollRef = useRef(null);
 
   useEffect(() => {
     setHeroImage('/src/assets/booking-page.jpg');
-
-    // Initialize Locomotive Scroll
-    const scroll = new LocomotiveScroll({
-      el: scrollRef.current,
-      smooth: true,
-      multiplier: 1,
-      class: 'is-revealed'
-    });
-
-    // Cleanup function
-    return () => {
-      if (scroll) scroll.destroy();
-    }
   }, []);
 
   const onFinish = (values) => {
@@ -33,14 +18,13 @@ const BookingsPage = () => {
   };
 
   return (
-    <div className="booking-page" data-scroll-container ref={scrollRef}>
-      {/* Hero Section with Backdrop */}
-      <div className="hero-section" data-scroll-section style={{backgroundImage: `url(${heroImage})`, backgroundSize: 'cover', backgroundPosition: 'center', height: '50vh'}}>
+    <div className="booking-page">
+      <div className="hero-section" style={{backgroundImage: `url(${heroImage})`, backgroundSize: 'cover', backgroundPosition: 'center', height: '50vh'}}>
         <div className="hero-overlay">
           <Row gutter={0} align="middle" justify="center" className="hero-content">
             <Col xs={24} md={16} style={{ textAlign: 'center' }}>
-              <Title level={1} data-scroll data-scroll-speed="1" style={{ color: 'white' }}>Book Your Visit to Semenggoh Wildlife Centre</Title>
-              <Paragraph data-scroll data-scroll-speed="2" style={{ color: 'white' }}>
+              <Title level={1} style={{ color: 'white' }}>Book Your Visit to Semenggoh Wildlife Centre</Title>
+              <Paragraph style={{ color: 'white' }}>
                 Experience the wonders of Borneo's wildlife and contribute to orangutan conservation.
               </Paragraph>
             </Col>
@@ -48,8 +32,7 @@ const BookingsPage = () => {
         </div>
       </div>
 
-      {/* Booking Form Section */}
-      <div className="booking-section" data-scroll-section style={{ padding: '40px 0' }}>
+      <div className="booking-section" style={{ padding: '40px 0' }}>
         <Row justify="center">
           <Col xs={24} md={16}>
             <Card title={<Space><CalendarOutlined /> Book Your Visit</Space>} className="booking-card">
@@ -104,12 +87,17 @@ const BookingsPage = () => {
         </Row>
       </div>
 
-      {/* Admission Info Section */}
-      <div className="info-section" data-scroll-section style={{ background: '#f0f2f5', padding: '40px 0' }}>
+      <div className="info-section" style={{ background: '#f0f2f5', padding: '40px 0' }}>
         <Row justify="center">
           <Col xs={24} md={16}>
             <Card title={<Space><InfoCircleOutlined /> Admission Information</Space>} className="info-card">
               <Row gutter={16}>
+                <Col xs={24} md={12}>
+                  <Card type="inner" title="Malaysian Citizens">
+                    <Paragraph><TeamOutlined /> Adults: RM5</Paragraph>
+                    <Paragraph><TeamOutlined /> Children (6-17): RM2</Paragraph>
+                  </Card>
+                </Col>
                 <Col xs={24} md={12}>
                   <Card type="inner" title="Malaysian Citizens">
                     <Paragraph><TeamOutlined /> Adults: RM5</Paragraph>

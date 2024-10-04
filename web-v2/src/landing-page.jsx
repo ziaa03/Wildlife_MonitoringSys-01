@@ -1,18 +1,14 @@
-
-// about us tab
-
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Typography, Row, Col, Card, Button, List } from 'antd';
-import { EnvironmentOutlined, CalendarOutlined, HeartOutlined, AlertOutlined, NotificationOutlined } from '@ant-design/icons';
-import LocomotiveScroll from 'locomotive-scroll';
+import { EnvironmentOutlined, CalendarOutlined, HeartOutlined, NotificationOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';  // Import Framer Motion
 
-const { Title, Paragraph, Text } = Typography;
+const { Title, Paragraph } = Typography;
 
 const LandingPage = () => {
   const [heroImage, setHeroImage] = useState('');
   const [newsFeed, setNewsFeed] = useState([]);
-  const scrollRef = useRef(null);
 
   useEffect(() => {
     setHeroImage('/src/assets/latest.jpg');
@@ -21,51 +17,54 @@ const LandingPage = () => {
       { title: 'Volunteer Program Update', description: 'New opportunities to volunteer with the Wildlife Center.' },
       { title: 'Conservation Achievements', description: 'Celebrating our success in protecting endangered species.' }
     ]);
-
-    // Initialize Locomotive Scroll
-    const scroll = new LocomotiveScroll({
-      el: scrollRef.current,
-      smooth: true,
-      multiplier: 1,
-      class: 'is-revealed'
-    });
-
-    // Cleanup function
-    return () => {
-      if (scroll) scroll.destroy();
-    }
   }, []);
 
-  const scrollToDiscover = () => {
-    const discoverSection = document.querySelector('.discover-section');
-    if (discoverSection) {
-      scrollRef.current.scrollTo(discoverSection);
-    }
+  // Motion variants for animation
+  const heroTextVariant = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 1 } },
+  };
+
+  const cardVariant = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: { opacity: 1, scale: 1, transition: { duration: 0.6, ease: 'easeOut' } },
   };
 
   return (
-    <div className="landing-page" data-scroll-container ref={scrollRef}>
-      {/* Hero Section with Backdrop */}
-      <div className="hero-section" data-scroll-section style={{backgroundImage: `url(${heroImage})`, backgroundSize: 'cover', backgroundPosition: 'center'}}>
+    <div className="landing-page">
+      {/* Hero Section */}
+      <motion.div
+        className="hero-section"
+        style={{ backgroundImage: `url(${heroImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.5 }}
+      >
         <div className="hero-overlay">
           <Row gutter={0} align="middle" className="hero-content">
             <Col xs={24} md={12}>
-              <div className="hero-text">
-                <Title level={1} data-scroll data-scroll-speed="1">Discover the beauty of Borneo's wildlife and join us in our conservation efforts.</Title>
-                <Paragraph data-scroll data-scroll-speed="2">
+              <motion.div className="hero-text" variants={heroTextVariant} initial="hidden" animate="visible">
+                <Title level={1}>Discover the beauty of Borneo's wildlife and join us in our conservation efforts.</Title>
+                <Paragraph>
                   The Semenggoh Wildlife Centre is a sanctuary for orangutans in Borneo. Established in 1975, the centre is dedicated to the rehabilitation of orangutans that have been injured, orphaned, or rescued from captivity.
                 </Paragraph>
-              </div>
+              </motion.div>
             </Col>
           </Row>
         </div>
-      </div>
+      </motion.div>
 
-{/* Discover Section */}
-<div className="discover-section" data-scroll-section>
-  <Title level={2} className="section-title" data-scroll>Explore</Title>
-  <Row gutter={[24, 24]} justify="center">
-    <Col xs={24} sm={12} md={8} data-scroll>
+      {/* Discover Section */}
+      <div className="discover-section">
+        <Title level={2} className="section-title">Explore</Title>
+        <Row gutter={[24, 24]} justify="center">
+  <Col xs={24} sm={12} md={8}>
+    <motion.div
+      variants={cardVariant}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+    >
       <Card
         hoverable
         className="discover-card"
@@ -79,8 +78,16 @@ const LandingPage = () => {
           Explore
         </Button>
       </Card>
-    </Col>
-    <Col xs={24} sm={12} md={8} data-scroll>
+    </motion.div>
+  </Col>
+
+  <Col xs={24} sm={12} md={8}>
+    <motion.div
+      variants={cardVariant}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+    >
       <Card
         hoverable
         className="discover-card"
@@ -96,8 +103,16 @@ const LandingPage = () => {
           </Button>
         </Link>
       </Card>
-    </Col>
-    <Col xs={24} sm={12} md={8} data-scroll>
+    </motion.div>
+  </Col>
+
+  <Col xs={24} sm={12} md={8}>
+    <motion.div
+      variants={cardVariant}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+    >
       <Card
         hoverable
         className="discover-card"
@@ -113,43 +128,56 @@ const LandingPage = () => {
           </Button>
         </Link>
       </Card>
-    </Col>
-  </Row>
+    </motion.div>
+  </Col>
+</Row>
 
+      </div>
 
-{/* News Feed Section */}
-<div className="info-section news-section">
-  <Row justify="center">
-    <Col xs={24}>
-      <Card className="news-card" title={<><NotificationOutlined /> Latest News</>} bordered={false}>
-        <List
-          itemLayout="vertical"
-          dataSource={newsFeed}
-          renderItem={item => (
-            <List.Item>
-              <List.Item.Meta title={item.title} description={item.description} />
-            </List.Item>
-          )}
-        />
-      </Card>
-    </Col>
-  </Row>
-</div>
+      {/* News Section */}
+      <div className="info-section news-section">
+        <Row justify="center">
+          <Col xs={24}>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <Card className="news-card" title={<><NotificationOutlined /> Latest News</>} bordered={false}>
+                <List
+                  itemLayout="vertical"
+                  dataSource={newsFeed}
+                  renderItem={item => (
+                    <List.Item>
+                      <List.Item.Meta title={item.title} description={item.description} />
+                    </List.Item>
+                  )}
+                />
+              </Card>
+            </motion.div>
+          </Col>
+        </Row>
+      </div>
 
-{/* Visitation Info Section */}
-<div className="info-section visit-section">
-  <Row justify="center">
-    <Col xs={24}>
-      <Card title="Admission Info" className="admission-card" bordered={false}>       
-        <Paragraph className="description-text">
-          <strong>Foreigners: </strong>Adults RM10, Children (6-17) RM5 <br />
-          <strong>Malaysian:  </strong>Adults RM5, Children (6-17) RM2
-        </Paragraph>
-      </Card>
-    </Col>
-  </Row>
-</div>
-    </div>
+      {/* Admission Info Section */}
+      <div className="info-section visit-section">
+        <Row justify="center">
+          <Col xs={24}>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6 }}
+            >
+              <Card title="Admission Info" className="admission-card" bordered={false}>
+                <Paragraph className="description-text">
+                  <strong>Foreigners: </strong>Adults RM10, Children (6-17) RM5 <br />
+                  <strong>Malaysian:  </strong>Adults RM5, Children (6-17) RM2
+                </Paragraph>
+              </Card>
+            </motion.div>
+          </Col>
+        </Row>
+      </div>
     </div>
   );
 };
