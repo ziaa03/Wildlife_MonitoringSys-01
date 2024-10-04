@@ -1,12 +1,15 @@
+
+/* BUTTON NORMAL - #00695C */
+/* BUTTON HOVER - #208f82 */
+
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-/* MAIN LAYOUT */
-* {
-  font-family: 'Poppins', sans-serif !important;
-  box-sizing: border-box;
-}
 
-body, .ant-typography, .ant-btn {
+/* MAIN LAYOUT */
+*,
+body, .ant-typography, .ant-btn, 
+.login-title, .other-buttons {
   font-family: 'Poppins', sans-serif !important;
 }
 
@@ -25,37 +28,28 @@ html, body, body.main-page-body {
 /* OVERRIDE ANT DEFAULT DESIGNS */
 .ant-layout-content {
   flex-grow: 1;
-  padding: 22px;
+  padding: 0;
   width: 100%;
 }
 
 .ant-layout-header {
-  background-color: #002e29;
+  background-color: transparent;
   color: #faf3dd;
   height: 80px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  padding-left: 5px;
-  position: sticky;
+  padding: 0 20px;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 1000;
   transition: all 0.3s ease-in-out;
 }
 
 .ant-layout-header.scrolled {
-  height: 60px;
-  background-color: #001f1a;
-}
-
-.ant-layout-sider {
-  background-color: white;
-  padding-top: 12px;
-}
-
-.ant-layout-sider-trigger {
-  background-color: white !important;
-  color: #002e29 !important;
+  background-color: rgba(0, 46, 41, 0.9);
 }
 
 .ant-layout-footer {
@@ -65,23 +59,18 @@ html, body, body.main-page-body {
 }
 
 .ant-menu {
-  background-color: white;
-  color: #002e29;
+  background-color: transparent;
+  border-bottom: none;
 }
 
-.ant-menu-title-content {
-  color: #002e29;
-}
-
-.ant-menu-item-icon {
-  color: #002e29 !important;
+.ant-menu-title-content, .ant-menu-item-icon {
+  color: #faf3dd !important;
 }
 
 /* HEADER */
 .logo-container {
   display: flex;
   align-items: center;
-  justify-content: center;
 }
 
 .logo {
@@ -95,9 +84,51 @@ html, body, body.main-page-body {
   font-size: 26px;
 }
 
-.main-content-background {
-  background: #fff;
+.main-content {
+  min-height: 100vh;
+  padding-top: 80px; /* To account for the fixed header */
 }
+
+/* FOOTER */
+.site-footer {
+  background-color: #002e29;
+  color: #faf3dd;
+  padding: 24px;
+  text-align: center;
+}
+
+.site-footer .ant-typography {
+  color: #faf3dd;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .ant-layout-header {
+    flex-direction: column;
+    height: auto;
+    padding: 10px;
+  }
+
+  .logo-container {
+    margin-bottom: 10px;
+  }
+
+  .ant-menu {
+    width: 100%;
+  }
+}
+
+/* SMOOTH SCROLLING */ 
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-y: scroll;
+}
+
+
+
 
 .shortcut-button {
   transition: all 0.3s ease;
@@ -106,15 +137,6 @@ html, body, body.main-page-body {
 .shortcut-button:hover {
   transform: translateY(-5px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.fade-in {
-  animation: fadeIn 0.5s ease-in;
 }
 
 /* LOGIN PAGE */
@@ -133,7 +155,6 @@ html, body, body.main-page-body {
 }
 
 .login-title {
-  font-family: 'Poppins';
   text-align: center;
   margin-bottom: 24px;
 }
@@ -158,7 +179,6 @@ html, body, body.main-page-body {
 
 /* Center the additional options */
 .other-buttons {
-  font-family: 'Poppins';
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -221,19 +241,6 @@ html, body, body.main-page-body {
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-.discover-button {
-  background-color: #026454;
-  border-color: #026454;
-  font-size: 1.1rem;
-  height: auto;
-  padding: 10px 20px;
-}
-
-.discover-button:hover {
-  background-color: #04927a;
-  border-color: #04927a;
-}
-
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .hero-text h1 {
@@ -279,17 +286,6 @@ html, body, body.main-page-body {
   margin-bottom: 20px;
 }
 
-.discover-button {
-  background-color: #026454;
-  border-color: #026454;
-  margin-top: auto;
-}
-
-.discover-button:hover {
-  background-color: #04927a !important;
-  border-color: #004d40 !important;
-}
-
 /* Info Sections */
 .info-section {
   position: relative;
@@ -323,13 +319,13 @@ html, body, body.main-page-body {
 }
 
 .alert-button {
-  background-color: #002e29;
-  border-color: #002e29;
+  background-color: #00695C;
+  border-color: #00695C;
   transition: all 0.3s ease;
 }
 
 .alert-button:hover {
-  background-color: #004d40;
+  background-color: #208f82;
   border-color: #004d40;
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -354,15 +350,6 @@ html, body, body.main-page-body {
   }
   100% {
     transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
     opacity: 1;
   }
 }
@@ -430,54 +417,13 @@ html.has-scroll-dragging {
   overflow: hidden;
 }
 
-/* Locomotive Scroll container */
-.c-scrollbar {
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 11px;
-  height: 100%;
-  transform-origin: center right;
-  transition: transform 0.3s, opacity 0.3s;
-  opacity: 0;
+/* SMOOTH SCROLLING */ 
+html {
+  scroll-behavior: smooth;
 }
 
-.c-scrollbar:hover {
-  transform: scaleX(1.45);
-}
-
-.c-scrollbar:hover,
-.has-scroll-scrolling .c-scrollbar,
-.has-scroll-dragging .c-scrollbar {
-  opacity: 1;
-}
-
-.c-scrollbar_thumb {
-  position: absolute;
-  top: 0;
-  right: 0;
-  background-color: #000;
-  opacity: 0.5;
-  width: 7px;
-  border-radius: 10px;
-  margin: 2px;
-  cursor: -webkit-grab;
-  cursor: grab;
-}
-
-.has-scroll-dragging .c-scrollbar_thumb {
-  cursor: -webkit-grabbing;
-  cursor: grabbing;
-}
-
-/* Fade-in animation for elements with 'is-revealed' class */
-[data-scroll] {
-  opacity: 0;
-  transition: opacity 1s;
-}
-
-[data-scroll].is-revealed {
-  opacity: 1;
+body {
+  overflow-y: scroll;
 }
 
 .ant-form-item-control-input-content {
@@ -485,15 +431,10 @@ html.has-scroll-dragging {
 }
 
 /* New styles for the booking page */
-.booking-card .ant-btn-primary {
-  background-color: #00695C;
-  border-color: #006400;
-}
-
-.booking-card .ant-btn-primary:hover,
-.booking-card .ant-btn-primary:focus {
-  background-color: #00695C;
-  border-color: #005000;
+.ant-btn-primary:hover,
+.ant-btn-primary:focus {
+  background-color: #208f82 !important;
+  border-color: #005000 !important;
 }
 
 .info-card .ant-typography,
@@ -508,8 +449,8 @@ html.has-scroll-dragging {
 }
 
 .ant-btn-primary {
-  background-color: #00695C;
-  border-color: #006400;
+  background-color: #00695C !important;
+  border-color: #006400 !important;
 }
 
 .support-hero-section {
@@ -538,9 +479,4 @@ html.has-scroll-dragging {
 
 .education-section-title {
   padding-top: 40px;
-}
-
-.education-section .ant-btn-primary:hover {
-  background-color: #004d40 !important;
-  border-color: #004d40;
 }
