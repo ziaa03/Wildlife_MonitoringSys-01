@@ -15,6 +15,7 @@ import TrailHunt from './trail-hunt';
 import TriviaQues from './trivia-ques';
 import LoginScreen from './login';
 import Bookings from './booking-page';
+import InteractiveMap from './interactive-map';
 
 const Stack = createStackNavigator();
 
@@ -54,6 +55,7 @@ const App = () => {
         <Stack.Screen name="TrailHunt" component={TrailHunt} />
         <Stack.Screen name="TriviaQues" component={TriviaQues} />
         <Stack.Screen name="Bookings" component={Bookings} />
+        <Stack.Screen name="IntMap" component={InteractiveMap} />
       </Stack.Navigator>
     </NavigationContainer>
   );

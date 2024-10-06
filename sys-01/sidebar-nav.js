@@ -34,6 +34,7 @@ const Sidebar = ({ isOpen, onClose }) => {
         <IconText name="home" label="Home" onPress={() => { onClose(); navigation.navigate('Landing'); }} />
         <IconText name="compass" label="Discover" onPress={() => { onClose(); navigation.navigate('Discover'); }} />
         <IconText name="question-circle" label="Challenges" onPress={() => { onClose(); navigation.navigate('TrailHunt'); }} />
+        <IconText name="map" label="Map" onPress={() => { onClose(); navigation.navigate('IntMap'); }} />
 
         <View style={[styles.lineSeparator, { marginBottom: 25 }]} />
         
