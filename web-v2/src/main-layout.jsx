@@ -6,6 +6,7 @@ import {
   CalendarOutlined, TrophyOutlined, SettingOutlined, 
   HeartOutlined 
 } from '@ant-design/icons';
+import { motion } from 'framer-motion';
 
 const { Header, Content, Footer } = Layout;
 const { Text } = Typography;
@@ -64,12 +65,17 @@ const MainLayout = ({ children }) => {
   }, []);
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    <Layout style={{ minHeight: '100vh', borderRadius: '15px', overflow: 'hidden' }}>
       <Header className={`header ${scrolled ? 'scrolled' : ''}`}>
-        <div className="logo-container">
+        <motion.div
+          className="logo-container"
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
           <img src="/src/assets/logo.png" alt="Wildlife Center Logo" className="logo" />
           <h1 className="header-title">Semenggoh Wildlife Center</h1>
-        </div>
+        </motion.div>
         <Menu
           theme="dark"
           mode="horizontal"
@@ -83,15 +89,26 @@ const MainLayout = ({ children }) => {
       </Header>
 
       <Content>
-        <div className="main-content">
+        <motion.div
+          className="main-content"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
           {children}
-        </div>
+        </motion.div>
       </Content>
 
       <Footer className="site-footer">
-        <Text strong>© 2024 Semenggoh Wildlife Centre</Text>
-        <br />
-        <Text>All rights reserved</Text>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Text strong>© 2024 Semenggoh Wildlife Centre</Text>
+          <br />
+          <Text>All rights reserved</Text>
+        </motion.div>
       </Footer>
     </Layout>
   );

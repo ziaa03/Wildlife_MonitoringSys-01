@@ -4,7 +4,7 @@ import { Form, Input, Button, Typography, message } from 'antd';
 import { ArrowRightOutlined } from '@ant-design/icons'; // For button icon
 import './styles.css';
 
-const LAPTOP_IP = 'cos30045.xyz'; // Your laptop's IP address
+const LAPTOP_IP = 'www.cos30045.xyz'; // Your laptop's IP address
 
 const { Title } = Typography;
 
