@@ -33,7 +33,7 @@ html, body, body.main-page-body {
 }
 
 .ant-layout-header {
-  background-color: transparent;
+  background-color: #00695C;
   color: #faf3dd;
   height: 80px;
   display: flex;
@@ -46,6 +46,15 @@ html, body, body.main-page-body {
   right: 0;
   z-index: 1000;
   transition: all 0.3s ease-in-out;
+}
+
+.ant-menu-item:hover {
+  background-color: #208f82 !important;
+}
+
+.ant-menu-item-selected {
+  background-color: #208f82 !important;
+  border-radius: 20px;
 }
 
 .ant-layout-header.scrolled {
