@@ -45,7 +45,15 @@
           "recordAudioAndroid": true
         }
       ],
-      "expo-font"
+      "expo-font",
+      [
+        "@rnmapbox/maps",
+        {
+          "RNMapboxMaps": {
+            "accessToken": "pk.eyJ1Ijoic3RldmU5ODg3IiwiYSI6ImNtMXcxcnpxMjA3aHAycXM5OW5sa2d4bjcifQ.jqGSbtXP52xYvXyKl_5t3A"
+          }
+        }
+      ]
     ]
   }
 }

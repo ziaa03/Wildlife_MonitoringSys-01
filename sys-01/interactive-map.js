@@ -25,19 +25,20 @@ const InteractiveMap = () => {
       <View style={styles.content}>
         <Text style={styles.headerTitle}>Interactive Map</Text>
       </View>
+
+    <View style={styles.container}>
+      <Header onMenuPress={toggleSidebar} profileImageSource={require('./assets/profile-placeholder.jpg')} />
+      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      <View style={styles.content}>
+        <Text style={styles.headerTitle}>Interactive Map</Text>
+        <View style={styles.mapContainer}>
+          <MapboxGL.MapView style={styles.map}>
+            <MapboxGL.Camera zoomLevel={12} centerCoordinate={[longitude, latitude]} /> {/* Replace with your coordinates */}
+          </MapboxGL.MapView>
+        </View>
+      </View>
     </View>
-    // <View style={styles.container}>
-    //   <Header onMenuPress={toggleSidebar} profileImageSource={require('./assets/profile-placeholder.jpg')} />
-    //   <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-    //   <View style={styles.content}>
-    //     <Text style={styles.headerTitle}>Interactive Map</Text>
-    //     <View style={styles.mapContainer}>
-    //       <MapboxGL.MapView style={styles.map}>
-    //         <MapboxGL.Camera zoomLevel={12} centerCoordinate={[longitude, latitude]} /> {/* Replace with your coordinates */}
-    //       </MapboxGL.MapView>
-    //     </View>
-    //   </View>
-    // </View>
+    </View>
   );
 };
 
