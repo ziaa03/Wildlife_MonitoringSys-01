@@ -99,12 +99,6 @@ const BookingsPage = () => {
                   </Card>
                 </Col>
                 <Col xs={24} md={12}>
-                  <Card type="inner" title="Malaysian Citizens">
-                    <Paragraph><TeamOutlined /> Adults: RM5</Paragraph>
-                    <Paragraph><TeamOutlined /> Children (6-17): RM2</Paragraph>
-                  </Card>
-                </Col>
-                <Col xs={24} md={12}>
                   <Card type="inner" title="Foreign Visitors">
                     <Paragraph><TeamOutlined /> Adults: RM10</Paragraph>
                     <Paragraph><TeamOutlined /> Children (6-17): RM5</Paragraph>
